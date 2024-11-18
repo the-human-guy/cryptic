@@ -1,6 +1,6 @@
 # the-human-guy.github.io
 
-[noticer](the-human-guy.github.io/noticer)
+[noticer](https://the-human-guy.github.io/noticer)
 
 todo:
 - fix key derivation algo and iv generation in cbc mode (pbkdf2 + random iv)
