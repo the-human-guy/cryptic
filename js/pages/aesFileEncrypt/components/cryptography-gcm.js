@@ -35,7 +35,7 @@ export const CryptographyGCM = ({
   children,
 }) => {
   const [passphrase, setPassphrase] = useState("");
-  const [cryptoInfo, setCryptoInfo] = useState({});
+  const [cryptoInfo, setCryptoInfo] = useState(null);
   const [selectedPackageMode, setSelectedPackageMode] = useState(PACKAGE_MODE.prepend);
   const [isKeyExtractable, selectKeyExtractability] = useState(false);
 
@@ -96,17 +96,14 @@ export const CryptographyGCM = ({
       </select>
 
       {!!cryptoInfo && (
-        <>
-          <details class="card">
-            <summary>Details</summary>
-            <div style={{ overflow: 'auto', whiteSpace: 'break-spaces' }}>
-              {!!cryptoInfo && JSON.stringify(cryptoInfo, null, 2)}
-            </div>
-          </details>
-
-          {children({ onEncrypt: encryptAes256, onDecrypt: decryptAes256 })}
-        </>
+        <details class="card">
+          <summary>Details</summary>
+          <div style={{ overflow: 'auto', whiteSpace: 'break-spaces' }}>
+            {!!cryptoInfo && JSON.stringify(cryptoInfo, null, 2)}
+          </div>
+        </details>
       )}
+      {children({ onEncrypt: encryptAes256, onDecrypt: decryptAes256 })}
     </>
   )
 }

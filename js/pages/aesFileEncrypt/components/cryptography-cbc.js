@@ -35,18 +35,20 @@ export const CryptographyCBC = ({
   children,
 }) => {
   const [passphrase, setPassphrase] = useState("");
-  const [cryptoInfo, setCryptoInfo] = useState({});
+  const [cryptoInfo, setCryptoInfo] = useState(null);
   const [selectedPackageMode, setSelectedPackageMode] = useState(PACKAGE_MODE.prepend);
+  const [isKeyExtractable, selectKeyExtractability] = useState(false);
 
   const encryptAes256 = async (onSuccess) => {
     if (arrayBuffer && passphrase) {
       try {
         const encrypted = await encrypt({
           input: arrayBuffer,
-          password: passphrase
+          password: passphrase,
+          extractableKey: isKeyExtractable,
         });
 
-        setCryptoInfo(encrypted)
+        setCryptoInfo(encrypted?.info)
         onSuccess(selectedPackageMode.pack(encrypted));
       } catch(err) {
         console.error('Encryption failed: ', err)
@@ -86,18 +88,22 @@ export const CryptographyCBC = ({
         />
       </div>
 
-      {(passphrase) && (
-        <>
-          <details class="card">
-            <summary>Details</summary>
-            <div style={{ overflow: 'auto', whiteSpace: 'break-spaces' }}>
-              {!!cryptoInfo && JSON.stringify(cryptoInfo, null, 2)}
-            </div>
-          </details>
+      <legend>Cryptography</legend>
 
-          {children({ onEncrypt: encryptAes256, onDecrypt: decryptAes256 })}
-        </>
+      <select onChange={e => selectKeyExtractability(e.target.value)} value={isKeyExtractable}>
+        <option value={false}>Non-extractable AES key (safe, encrypt-only)</option>
+        <option value={true}>Extractable AES key (unsafe, encrypt+decrypt)</option>
+      </select>
+
+      {!!cryptoInfo && (
+        <details class="card">
+          <summary>Details</summary>
+          <div style={{ overflow: 'auto', whiteSpace: 'break-spaces' }}>
+            {!!cryptoInfo && JSON.stringify(cryptoInfo, null, 2)}
+          </div>
+        </details>
       )}
+      {children({ onEncrypt: encryptAes256, onDecrypt: decryptAes256 })}
     </>
   )
 }
