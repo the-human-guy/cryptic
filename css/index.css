@@ -55,7 +55,8 @@ html body {
   color: inherit;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &.file-list__filename--selected {
     transform: translateX(1rem);
     color: var(--cemph);
   }

@@ -81,7 +81,11 @@ export function AesFileEncryptPage() {
           <div className="file-list__item">
             <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
             <button onClick={() => downloadFile(file)} title="Download">💾</button>
-            <button className="file-list__filename" tabIndex="0" onClick={() => selectFile(file)}>{file.name}</button>
+            <button
+              className={`file-list__filename ${file === selectedFile && 'file-list__filename--selected'}`}
+              tabIndex="0"
+              onClick={() => selectFile(file)}
+            >{file.name}</button>
           </div>
         ))}
       </div>
