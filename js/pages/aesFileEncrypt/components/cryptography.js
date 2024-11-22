@@ -62,27 +62,15 @@ export const Cryptography = (props) => {
             <div>
               <button
                 type="button"
-                onClick={() => onEncrypt((newFile) => onFileEncrypt(newFile, 'save'))}
+                onClick={() => onEncrypt(onFileEncrypt)}
               >
-                Encrypt & Save
+                Encrypt
               </button>
               <button
                 type="button"
-                onClick={() => onEncrypt((newFile) => onFileEncrypt(newFile, 'edit'))}
+                onClick={() => onDecrypt(onFileDecrypt)}
               >
-                Encrypt & Edit
-              </button>
-              <button
-                type="button"
-                onClick={() => onDecrypt((newFile) => onFileDecrypt(newFile, 'save'))}
-              >
-                Decrypt & Save
-              </button>
-              <button
-                type="button"
-                onClick={() => onDecrypt((newFile) => onFileDecrypt(newFile, 'edit'))}
-              >
-                Decrypt & Edit
+                Decrypt
               </button>
             </div>
           )}

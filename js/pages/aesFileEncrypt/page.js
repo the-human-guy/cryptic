@@ -56,27 +56,6 @@ export function AesFileEncryptPage() {
     window.URL.revokeObjectURL(url);
   };
 
-
-  // action: 'save' | 'edit'
-  const onFileDecrypt = (file, action) => {
-    addFileToList(file)
-    if (action === 'save') {
-      downloadFile(file)
-    }
-    if (action === 'edit') {
-      setUsingEditor(true)
-    }
-  }
-  const onFileEncrypt = (file, action) => {
-    addFileToList(file)
-    if (action === 'save') {
-      downloadFile(file)
-    }
-    if (action === 'edit') {
-      setUsingEditor(true)
-    }
-  }
-
   return (
     <main style={{ paddingBottom: '7rem' }}>
       <div>
@@ -133,14 +112,14 @@ export function AesFileEncryptPage() {
           <div class="col" style={{ minWidth: 0 }}>
             <Cryptography
               file={selectedFile}
-              onFileEncrypt={onFileEncrypt}
-              onFileDecrypt={onFileDecrypt}
+              onFileEncrypt={addFileToList}
+              onFileDecrypt={addFileToList}
             />
           </div>
         </div>
       )}
 
-      {!!usingEditor && (
+      {!!usingEditor && selectedFile && (
         <div class="card info">
           <p>Editor</p>
           <FileEditor file={selectedFile} onSave={(editedFile) => addFileToList(editedFile)} />
