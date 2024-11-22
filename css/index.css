@@ -74,3 +74,27 @@ html body {
 	height: 100%;
 }
 
+.dropzone-file-input {
+    font-size: 0 !important;
+    padding: 0.3rem 0.5rem !important;
+    cursor: pointer;
+}
+
+.dropzone-file-input:before {
+    content: 'Choose File';
+    font-size: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

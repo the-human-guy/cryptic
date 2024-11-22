@@ -7,28 +7,40 @@ const FILE_MAX_SIZE = 1024 * 1024 * 50
 const FILE_MAX_SIZE_LABEL = 'max. 50MB'
 
 export function AesFileEncryptPage() {
-  const [inputFile, setInputFile] = useState(null);
+  const [filesList, setFilesList] = useState([]);
+  const [selectedFile, selectFile] = useState(null);
   const [usingEditor, setUsingEditor] = useState(false)
+  const addFileToList = (file) => {
+    setFilesList(cur => [...cur, file])
+    selectFile(file)
+  }
+  const removeFileFromList = file => {
+    setFilesList(cur => cur.filter(file1 => file1 !== file))
+    if (selectedFile === file) {
+      selectFile(null)
+    }
+  }
 
-  const changeFile = (files) => {
+  const onFileUpload = (files) => {
     const file = files[0];
     if (!file) {
-      return setInputFile(null);
+      return;
     }
     if (file.size > FILE_MAX_SIZE) {
       return alert(FILE_MAX_SIZE_LABEL);
     }
     console.log(files);
 
-    setInputFile(file);
+    addFileToList(file);
     setTimeout(() => {
-        // document.getElementById("file-input-form").reset();
+      document.getElementById("file-input-form").reset();
     }, 50);
   };
 
   const resetForm = () => {
     document.getElementById("file-input-form").reset();
-    setInputFile(null);
+    selectFile(null);
+    setFilesList([])
     setUsingEditor(false);
   }
 
@@ -47,20 +59,20 @@ export function AesFileEncryptPage() {
 
   // action: 'save' | 'edit'
   const onFileDecrypt = (file, action) => {
+    addFileToList(file)
     if (action === 'save') {
       downloadFile(file)
     }
     if (action === 'edit') {
-      setInputFile(file)
       setUsingEditor(true)
     }
   }
   const onFileEncrypt = (file, action) => {
+    addFileToList(file)
     if (action === 'save') {
       downloadFile(file)
     }
     if (action === 'edit') {
-      setInputFile(file)
       setUsingEditor(true)
     }
   }
@@ -76,39 +88,50 @@ export function AesFileEncryptPage() {
               <span>Click to upload a file ({FILE_MAX_SIZE_LABEL})</span>
               <input
                 id="dropzone-file"
+                className="dropzone-file-input"
                 type="file"
-                onChange={(e) => {changeFile(e.target.files); setUsingEditor(false); }}
+                onChange={(e) => {onFileUpload(e.target.files); setUsingEditor(false); }}
               />
           </label>
-          {!!inputFile && <button type="reset" onClick={resetForm}>Reset</button>}
+          {!!selectedFile && <button type="reset" onClick={resetForm}>Reset</button>}
         </form>
       </div>
 
-      {!!inputFile && (
+      <div>
+        {filesList.map(file => (
+          <div class="card">
+            <button onClick={() => removeFileFromList(file)}>Delete</button>
+            {file !== selectedFile && (<button onClick={() => selectFile(file)}>Select</button>)}
+            <b style={{ marginLeft: '1rem' }}>{file.name}</b>
+          </div>
+        ))}
+      </div>
+
+      {!!selectedFile && (
         <div class="row">
           <div class="col">
             <fieldset>
               <legend>File Info</legend>
               <div>
                 <span>File name:</span>{" "}
-                {inputFile.name}
+                {selectedFile.name}
               </div>
               <div>
                 <span>Last modified date:</span>{" "}
-                {inputFile.lastModifiedDate.toString()}
+                {selectedFile.lastModifiedDate.toString()}
               </div>
               <div>
-                <span>Size:</span> {inputFile.size}
+                <span>Size:</span> {selectedFile.size}
               </div>
               <div>
-                <span>Type:</span> {inputFile.type}
+                <span>Type:</span> {selectedFile.type}
               </div>
               <button type="button" onClick={() => openInEditor()}>Open in editor</button>
             </fieldset>
           </div>
           <div class="col" style={{ minWidth: 0 }}>
             <Cryptography
-              file={inputFile}
+              file={selectedFile}
               onFileEncrypt={onFileEncrypt}
               onFileDecrypt={onFileDecrypt}
             />
@@ -119,7 +142,7 @@ export function AesFileEncryptPage() {
       {!!usingEditor && (
         <div class="card info">
           <p>Editor</p>
-          <FileEditor file={inputFile} onSave={(editedFile) => setInputFile(editedFile)} />
+          <FileEditor file={selectedFile} onSave={(editedFile) => addFileToList(editedFile)} />
         </div>
       )}
 
