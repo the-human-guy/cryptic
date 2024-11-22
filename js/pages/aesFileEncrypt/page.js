@@ -46,12 +46,12 @@ export function AesFileEncryptPage() {
 
   const openInEditor = () => setUsingEditor(true)
 
-  const downloadFile = (blob, fileName) => {
+  const downloadFile = (file) => {
     const tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
-    const url = window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(file);
     tempEl.href = url;
-    tempEl.download = fileName;
+    tempEl.download = file.name;
     tempEl.click();
     window.URL.revokeObjectURL(url);
   };
@@ -100,7 +100,8 @@ export function AesFileEncryptPage() {
       <div>
         {filesList.map(file => (
           <div class="card">
-            <button onClick={() => removeFileFromList(file)}>Delete</button>
+            <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
+            <button onClick={() => downloadFile(file)} title="Download">💾</button>
             {file !== selectedFile && (<button onClick={() => selectFile(file)}>Select</button>)}
             <b style={{ marginLeft: '1rem' }}>{file.name}</b>
           </div>
