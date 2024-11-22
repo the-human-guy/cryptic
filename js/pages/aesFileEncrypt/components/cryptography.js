@@ -31,12 +31,12 @@ export const Cryptography = (props) => {
   }, [file])
 
   const onFileEncrypt = (buffer, ...args) => {
-    const newFile = new File([new Blob([buffer])], `encrypted-${file.name}`, { type: file.type });
+    const newFile = new File([new Blob([buffer])], `enc-${file.name}`, { type: file.type });
     onFileEncryptProp(newFile, ...args)
   }
 
   const onFileDecrypt = (buffer, ...args) => {
-    const newFile = new File([new Blob([buffer])], `decrypted-${file.name}`, { type: file.type });
+    const newFile = new File([new Blob([buffer])], `dec-${file.name}`, { type: file.type });
     onFileEncryptProp(newFile, ...args)
   }
 
