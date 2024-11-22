@@ -106,7 +106,7 @@ export function AesFileEncryptPage() {
               <div>
                 <span>Type:</span> {selectedFile.type}
               </div>
-              <button type="button" onClick={() => openInEditor()}>Open in editor</button>
+              <button type="button" onClick={() => openInEditor()}>Edit</button>
             </fieldset>
           </div>
           <div class="col" style={{ minWidth: 0 }}>

@@ -46,10 +46,10 @@ ${fileContent}
   return (
     <div>
       <button type="button" onClick={saveFile}>Save changes</button>
-      <button type="button" onClick={wrapWithPre}>{'Wrap with <pre>'}</button>
+      <button type="button" onClick={wrapWithPre}>{'<pre>'}</button>
       <button type="reset" onClick={resetToOriginalFile}>Reset</button>
       <select onChange={e => setPreviewMode(e.target.value)}>
-        <option value={false}>Preview disabled</option>
+        <option value={false}>Preview</option>
         <option value={PREVIEW_MODE.HTML}>HTML</option>
       </select>
 
