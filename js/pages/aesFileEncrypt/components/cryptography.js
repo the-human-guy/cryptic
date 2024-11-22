@@ -48,8 +48,8 @@ export const Cryptography = (props) => {
   }
 
   return (
-    <fieldset style={{ minWidth: 0 }}>
-      <legend>Cryptography</legend>
+    <div className="card info" style={{ minWidth: 0 }}>
+      <p>Cryptography</p>
 
       <select onChange={e => selectAlgo(e.target.value)} value={selectedAlgo}>
         <option value={CRYPTO_ALGO.GCM.code}>{CRYPTO_ALGO.GCM.label}</option>
@@ -76,6 +76,6 @@ export const Cryptography = (props) => {
           )}
         </CryptoComponent>
       )}
-    </fieldset>
+    </div>
   )
 }

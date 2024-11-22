@@ -76,13 +76,12 @@ export function AesFileEncryptPage() {
         </form>
       </div>
 
-      <div>
-        {filesList.map(file => (
-          <div class="card">
+      <div className="file-list">
+        {filesList.map((file, i) => (
+          <div className="file-list__item">
             <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
             <button onClick={() => downloadFile(file)} title="Download">💾</button>
-            {file !== selectedFile && (<button onClick={() => selectFile(file)}>Select</button>)}
-            <b style={{ marginLeft: '1rem' }}>{file.name}</b>
+            <button className="file-list__filename" tabIndex="0" onClick={() => selectFile(file)}>{file.name}</button>
           </div>
         ))}
       </div>
@@ -90,8 +89,8 @@ export function AesFileEncryptPage() {
       {!!selectedFile && (
         <div class="row">
           <div class="col">
-            <fieldset>
-              <legend>File Info</legend>
+            <div className="card info">
+              <p>File Info</p>
               <div>
                 <span>File name:</span>{" "}
                 {selectedFile.name}
@@ -107,7 +106,7 @@ export function AesFileEncryptPage() {
                 <span>Type:</span> {selectedFile.type}
               </div>
               <button type="button" onClick={() => openInEditor()}>Edit</button>
-            </fieldset>
+            </div>
           </div>
           <div class="col" style={{ minWidth: 0 }}>
             <Cryptography
