@@ -6,4 +6,13 @@
 
 ### Todo:
 - ctr?
-- pgp -- https://www.npmjs.com/package/openpgp#browser-plain-files
+- type (ecc) and openpgp.enums.curve -- selector
+- passwordless generated key + decryption
+- proper key generation / uploading flow in pgp -- probably use useReducer
+- upload / download pgp keys
+
+
+
+
+
+
