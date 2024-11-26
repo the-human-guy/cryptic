@@ -8,4 +8,5 @@ curl -L https://unpkg.com/react-dom@18/umd/react-dom.production.min.js > ./lib/r
 curl -L https://unpkg.com/react-router-dom@6.26.2/dist/umd/react-router-dom.production.min.js > ./lib/react-router-dom.production.min.js
 curl -L https://cdn.jsdelivr.net/npm/@remix-run/router@1.19.2/dist/router.umd.min.js > ./lib/remix-run.router.min.js
 curl -L https://unpkg.com/react-router@6.26.2/dist/umd/react-router.production.min.js > ./lib/react-router.production.min.js
+curl -L https://unpkg.com/openpgp@6.0.1/dist/openpgp.min.js > ./lib/openpgp.min.js
 

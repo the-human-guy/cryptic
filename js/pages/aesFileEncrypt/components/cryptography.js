@@ -1,15 +1,20 @@
 import { CryptographyCBC } from './cryptography-cbc.js';
 import { CryptographyGCM } from './cryptography-gcm.js';
+import { CryptographyPGP } from './cryptography-pgp.js';
 const { useEffect, useState } = React
 
 const CRYPTO_ALGO = {
   GCM: {
-    code: 'aes256-gcm',
     label: 'AES256-GCM',
+    Component: CryptographyGCM,
   },
   CBC: {
-    code: 'aes256-cbc',
     label: 'AES256-CBC',
+    Component: CryptographyCBC,
+  },
+  PGP: {
+    label: 'OpenPGP.js',
+    Component: CryptographyPGP,
   },
 }
 
@@ -19,7 +24,8 @@ export const Cryptography = (props) => {
     onFileEncrypt: onFileEncryptProp,
     onFileDecrypt: onFileDecryptProp,
   } = props
-  const [selectedAlgo, selectAlgo] = useState(CRYPTO_ALGO.GCM.code);
+  //const [selectedAlgo, selectAlgo] = useState('PGP');
+  const [selectedAlgo, selectAlgo] = useState(GCM);
   const [fileArrayBuffer, setFileArrayBuffer] = useState(null)
 
   useEffect(() => {
@@ -40,20 +46,16 @@ export const Cryptography = (props) => {
     onFileEncryptProp(newFile, ...args)
   }
 
-  let CryptoComponent = '';
-  if (selectedAlgo === CRYPTO_ALGO.GCM.code) {
-    CryptoComponent = CryptographyGCM
-  } else if (selectedAlgo === CRYPTO_ALGO.CBC.code) {
-    CryptoComponent = CryptographyCBC
-  }
+  const CryptoComponent = CRYPTO_ALGO[selectedAlgo].Component || 'div'
 
   return (
     <div className="card info" style={{ minWidth: 0 }}>
       <p>Cryptography</p>
 
       <select onChange={e => selectAlgo(e.target.value)} value={selectedAlgo}>
-        <option value={CRYPTO_ALGO.GCM.code}>{CRYPTO_ALGO.GCM.label}</option>
-        <option value={CRYPTO_ALGO.CBC.code}>{CRYPTO_ALGO.CBC.label}</option>
+        {Object.entries(CRYPTO_ALGO).map(([key, algo]) => (
+          <option value={key}>{algo.label}</option>
+        ))}
       </select>
 
       {!!fileArrayBuffer && (
