@@ -16,6 +16,7 @@ export const encrypt = async ({
   const encrypted = await openpgp.encrypt({
     message: await openpgp.createMessage({ binary: new Uint8Array(secretData) }),
     encryptionKeys: publicKey,
+    format: 'binary',
     // signingKeys: privateKey // optional
   });
   console.log(encrypted);
@@ -38,10 +39,16 @@ export const decrypt = async ({
     passphrase
   });
 
+  const encryptedMessage = await openpgp.readMessage({
+    binaryMessage: new Uint8Array(encryptedData) // parse encrypted bytes
+  });
+
   const { data: decrypted, signatures } = await openpgp.decrypt({
-    message: await openpgp.createMessage({ binary: new Uint8Array(encryptedData) }),
+    //message: await openpgp.createMessage({ binary: new Uint8Array(encryptedData) }),
+    message: encryptedMessage,
     decryptionKeys: privateKey,
     verificationKeys: verificationPublicKey, // optional
+    format: 'binary',
   });
 
   console.log(decrypted);

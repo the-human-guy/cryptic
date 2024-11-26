@@ -24,8 +24,8 @@ export const Cryptography = (props) => {
     onFileEncrypt: onFileEncryptProp,
     onFileDecrypt: onFileDecryptProp,
   } = props
-  //const [selectedAlgo, selectAlgo] = useState('PGP');
-  const [selectedAlgo, selectAlgo] = useState(GCM);
+  const [selectedAlgo, selectAlgo] = useState('PGP');
+  //const [selectedAlgo, selectAlgo] = useState(GCM);
   const [fileArrayBuffer, setFileArrayBuffer] = useState(null)
 
   useEffect(() => {

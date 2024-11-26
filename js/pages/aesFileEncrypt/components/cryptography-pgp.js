@@ -34,7 +34,8 @@ export const CryptographyPGP = ({
 
         console.log('encrypted: ', encrypted)
         // setCryptoInfo(encrypted?.info)
-        // onSuccess(selectedPackageMode.pack(encrypted));
+        //onSuccess(selectedPackageMode.pack(encrypted));
+        onSuccess(encrypted?.buffer);
       } catch(err) {
         console.error('Encryption failed: ', err)
         alert('Encryption failed')
