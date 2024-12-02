@@ -70,19 +70,24 @@ export function AesFileEncryptPage() {
                   }}
                 />
             </label>
-            {!!selectedFile && <button type="reset" onClick={resetForm}>Reset</button>}
+            {!!selectedFile && (
+              <>
+                <button type="reset" onClick={resetForm}>Reset</button>
+                <hr className="my-1" />
+              </>
+            )}
           </div>
 
           <div className="file-list">
             {filesList.map((file, i) => (
               <div className="file-list__item">
-                <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
-                <button onClick={() => downloadFile(file)} title="Download">💾</button>
                 <button
                   className={`file-list__filename ${file === selectedFile && 'file-list__filename--selected'}`}
                   tabIndex="0"
                   onClick={() => selectFile(file)}
                 >{file.name}</button>
+                <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
+                <button onClick={() => downloadFile(file)} title="Download">💾</button>
               </div>
             ))}
           </div>
@@ -122,7 +127,7 @@ export function AesFileEncryptPage() {
 
             </div>
 
-            <div class="col col-2" style={{ minWidth: 0 }}>
+            <div class="col col-3" style={{ minWidth: 0 }}>
               <Cryptography
                 file={selectedFile}
                 onFileEncrypt={addFileToList}
