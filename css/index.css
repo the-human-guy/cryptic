@@ -6,7 +6,7 @@
 }
 
 html body {
-  --width: 1280px;
+  --width: 100%;
 }
 
 /**/
@@ -42,10 +42,10 @@ html body {
 }
 
 .file-list__item {
-  white-space: nowrap;
 }
 
 .file-list__filename {
+  width: 100%;
   border: none;
   background: none;
   font-weight: bold;
@@ -53,11 +53,14 @@ html body {
   white-space: normal;
   pointer-events: all;
   color: inherit;
+  padding-block: 0;
+  margin: 0;
+  text-align: left;
 
   &:hover,
   &:focus,
   &.file-list__filename--selected {
-    transform: translateX(1rem);
+    transform: translateX(0.3rem);
     color: var(--cemph);
   }
 }

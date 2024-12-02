@@ -32,19 +32,13 @@ export function AesFileEncryptPage() {
     console.log(files);
 
     addFileToList(file);
-    setTimeout(() => {
-      document.getElementById("file-input-form").reset();
-    }, 50);
   };
 
   const resetForm = () => {
-    document.getElementById("file-input-form").reset();
     selectFile(null);
     setFilesList([])
     setUsingEditor(false);
   }
-
-  const openInEditor = () => setUsingEditor(true)
 
   const downloadFile = (file) => {
     const tempEl = document.createElement("a");
@@ -58,77 +52,86 @@ export function AesFileEncryptPage() {
 
   return (
     <main style={{ paddingBottom: '7rem' }}>
-      <div>
-        <h1>AES256 File Encrypt</h1>
 
-        {/* file input */}
-        <form id="file-input-form" style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <label htmlFor="dropzone-file">
-              <span>Click to upload a file ({FILE_MAX_SIZE_LABEL})</span>
-              <input
-                id="dropzone-file"
-                className="dropzone-file-input"
-                type="file"
-                onChange={(e) => {onFileUpload(e.target.files); setUsingEditor(false); }}
-              />
-          </label>
-          {!!selectedFile && <button type="reset" onClick={resetForm}>Reset</button>}
-        </form>
-      </div>
-
-      <div className="file-list">
-        {filesList.map((file, i) => (
-          <div className="file-list__item">
-            <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
-            <button onClick={() => downloadFile(file)} title="Download">💾</button>
-            <button
-              className={`file-list__filename ${file === selectedFile && 'file-list__filename--selected'}`}
-              tabIndex="0"
-              onClick={() => selectFile(file)}
-            >{file.name}</button>
+      <div class="row">
+        <div class="col col-2">
+          {/* file input */}
+          <div>
+            <label htmlFor="dropzone-file">
+                <span>Click to upload a file ({FILE_MAX_SIZE_LABEL})</span>
+                <input
+                  id="dropzone-file"
+                  className="dropzone-file-input"
+                  type="file"
+                  onChange={(e) => {
+                    onFileUpload(e.target.files);
+                    setUsingEditor(false);
+                    e.target.value = ''
+                  }}
+                />
+            </label>
+            {!!selectedFile && <button type="reset" onClick={resetForm}>Reset</button>}
           </div>
-        ))}
-      </div>
 
-      {!!selectedFile && (
-        <div class="row">
-          <div class="col">
-            <div className="card info">
-              <p>File Info</p>
-              <div>
-                <span>File name:</span>{" "}
-                {selectedFile.name}
+          <div className="file-list">
+            {filesList.map((file, i) => (
+              <div className="file-list__item">
+                <button onClick={() => removeFileFromList(file)} title="Remove">✖️</button>
+                <button onClick={() => downloadFile(file)} title="Download">💾</button>
+                <button
+                  className={`file-list__filename ${file === selectedFile && 'file-list__filename--selected'}`}
+                  tabIndex="0"
+                  onClick={() => selectFile(file)}
+                >{file.name}</button>
               </div>
-              <div>
-                <span>Last modified date:</span>{" "}
-                {selectedFile.lastModifiedDate.toString()}
+            ))}
+          </div>
+
+        </div>
+
+
+        {!!selectedFile && (
+          <>
+            <div class="col">
+
+              <div className="card info">
+                <p>File Info</p>
+                <div>
+                  <span>File name:</span>{" "}
+                  {selectedFile.name}
+                </div>
+                <div>
+                  <span>Last modified date:</span>{" "}
+                  {selectedFile.lastModifiedDate.toString()}
+                </div>
+                <div>
+                  <span>Size:</span> {selectedFile.size}
+                </div>
+                <div>
+                  <span>Type:</span> {selectedFile.type}
+                </div>
+                <button type="button" onClick={() => setUsingEditor(!usingEditor)}>Edit</button>
               </div>
-              <div>
-                <span>Size:</span> {selectedFile.size}
-              </div>
-              <div>
-                <span>Type:</span> {selectedFile.type}
-              </div>
-              <button type="button" onClick={() => openInEditor()}>Edit</button>
+
+              {!!usingEditor && (
+                <div class="card info">
+                  <p>Editor</p>
+                  <FileEditor file={selectedFile} onSave={(editedFile) => addFileToList(editedFile)} />
+                </div>
+              )}
+
             </div>
-          </div>
-          <div class="col" style={{ minWidth: 0 }}>
-            <Cryptography
-              file={selectedFile}
-              onFileEncrypt={addFileToList}
-              onFileDecrypt={addFileToList}
-            />
-          </div>
-        </div>
-      )}
 
-      {!!usingEditor && selectedFile && (
-        <div class="card info">
-          <p>Editor</p>
-          <FileEditor file={selectedFile} onSave={(editedFile) => addFileToList(editedFile)} />
-        </div>
-      )}
-
+            <div class="col col-2" style={{ minWidth: 0 }}>
+              <Cryptography
+                file={selectedFile}
+                onFileEncrypt={addFileToList}
+                onFileDecrypt={addFileToList}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </main>
 
   );
