@@ -127,7 +127,7 @@ export function AesFileEncryptPage() {
 
             </div>
 
-            <div class="col col-3" style={{ minWidth: 0 }}>
+            <div class="col col-5" style={{ minWidth: 0 }}>
               <Cryptography
                 file={selectedFile}
                 onFileEncrypt={addFileToList}

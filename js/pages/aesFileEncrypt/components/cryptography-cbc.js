@@ -99,7 +99,19 @@ export const CryptographyCBC = ({
         <details class="card">
           <summary>Details</summary>
           <div style={{ overflow: 'auto', whiteSpace: 'break-spaces' }}>
-            {!!cryptoInfo && JSON.stringify(cryptoInfo, null, 2)}
+            <fieldset>
+              {Object.entries(cryptoInfo).map(([propName, propValue]) => (
+                <>
+                  <label for={'cryptoInfo_' + propName}>{propName}</label>
+                  <input
+                    type="text"
+                    id={'cryptoInfo_' + propName}
+                    value={propValue}
+                    disabled
+                  />
+                </>
+              ))}
+            </fieldset>
           </div>
         </details>
       )}

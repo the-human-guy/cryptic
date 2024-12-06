@@ -58,15 +58,15 @@ export async function encrypt({ input: secretData, password, extractableKey = fa
     let aesKeyExtracted = 'non-extractable key'
     if (extractableKey) {
       aesKeyExtracted = await window.crypto.subtle.exportKey("jwk", aesKey)
-      aesKeyExtracted = JSON.stringify(aesKeyExtracted)
+      aesKeyExtracted = aesKeyExtracted.k
     }
-    window.aeskey = aesKey 
+
     return {
       info: {
-        aesKeyExtracted,
+        aesKeyExtracted_base64: aesKeyExtracted,
         cipherText_base64: buff_to_base64(cipherText),
-        cipherTextWithoutAuthTag: buff_to_base64(cipherTextWithoutAuthTag),
-        authTag: buff_to_base64(authTag),//new Uint8Array(authTag),
+        cipherTextWithoutAuthTag_base64: buff_to_base64(cipherTextWithoutAuthTag),
+        authTag_base64: buff_to_base64(authTag),
         salt_base64: buff_to_base64(salt.buffer),
         iv_base64: buff_to_base64(iv.buffer),
       },
