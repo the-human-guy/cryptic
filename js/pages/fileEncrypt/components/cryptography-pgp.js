@@ -3,30 +3,29 @@ import {
   decrypt,
   generateKeys,
   parseKeys,
-} from "../../../utils/pgp.js";
+} from '../../../utils/pgp.js'
 import { selectFileAndRead, downloadText } from '../../../utils/files.js'
-import { PasswordInput } from '../../../components/passwordInput.js';
+import { PasswordInput } from '../../../components/passwordInput.js'
 
 const { useEffect, useState } = React
 
-export const CryptographyPGP = ({
-  arrayBuffer,
-  children,
-}) => {
-  const [passphrase, setPassphrase] = useState("");
-  const [privateKey, setPrivateKey] = useState("");
-  const [publicKey, setPublicKey] = useState("");
-  const [revocationCertificate, setRevocationCertificate] = useState("");
-  const [cryptoInfo, setCryptoInfo] = useState(null);
+export const CryptographyPGP = ({ arrayBuffer, children }) => {
+  const [passphrase, setPassphrase] = useState('')
+  const [privateKey, setPrivateKey] = useState('')
+  const [publicKey, setPublicKey] = useState('')
+  const [revocationCertificate, setRevocationCertificate] = useState('')
+  const [cryptoInfo, setCryptoInfo] = useState(null)
   const onGenerateKeys = async () => {
-    const { privateKey, publicKey, revocationCertificate } = await generateKeys({ passphrase })
+    const { privateKey, publicKey, revocationCertificate } = await generateKeys(
+      { passphrase },
+    )
     setPrivateKey(privateKey)
     setPublicKey(publicKey)
     setRevocationCertificate(revocationCertificate)
   }
 
   const onDownloadKeys = async () => {
-    downloadText(privateKey + '\n\n' + publicKey, 'keys.txt') 
+    downloadText(privateKey + '\n\n' + publicKey, 'keys.txt')
   }
 
   const onEncrypt = async (onSuccess) => {
@@ -37,18 +36,18 @@ export const CryptographyPGP = ({
           publicKeyArmored: publicKey,
           passphrase,
           // signingPrivateKeyArmored,
-        });
+        })
 
         console.log('encrypted: ', encrypted)
         // setCryptoInfo(encrypted?.info)
         //onSuccess(selectedPackageMode.pack(encrypted));
-        onSuccess(encrypted?.buffer);
-      } catch(err) {
+        onSuccess(encrypted?.buffer)
+      } catch (err) {
         console.error('Encryption failed: ', err)
         alert('Encryption failed')
       }
     }
-  };
+  }
 
   const onDecrypt = async (onSuccess) => {
     if (arrayBuffer) {
@@ -59,15 +58,15 @@ export const CryptographyPGP = ({
           passphrase,
           privateKeyArmored: privateKey,
           // verificationPublicKey,
-        });
-        console.log(decrypted);
+        })
+        console.log(decrypted)
         onSuccess(decrypted)
-      } catch(err) {
+      } catch (err) {
         console.error('Decryption failed: ', err)
         alert('Decryption failed')
       }
     }
-  };
+  }
 
   return (
     <div>
@@ -81,23 +80,23 @@ export const CryptographyPGP = ({
       >
         Upload keys
       </button>
-      
+
       <PasswordInput
         onChange={(e) => setPassphrase(e.target.value)}
         value={passphrase}
-        placeholder="Passphrase"
-        id="input-pass"
+        placeholder='Passphrase'
+        id='input-pass'
       />
 
       <div>
         <textarea
           onChange={(e) => setPrivateKey(e.target.value)}
           value={privateKey}
-          id="privateKey"
-          name="privateKey"
-          placeholder="Private Key"
-          cols="30"
-          rows="3"
+          id='privateKey'
+          name='privateKey'
+          placeholder='Private Key'
+          cols='30'
+          rows='3'
           style={{ maxWidth: '100%' }}
         />
       </div>
@@ -106,20 +105,21 @@ export const CryptographyPGP = ({
         <textarea
           onChange={(e) => setPublicKey(e.target.value)}
           value={publicKey}
-          id="publicKey"
-          name="publicKey"
-          placeholder="Public Key"
-          cols="30"
-          rows="3"
+          id='publicKey'
+          name='publicKey'
+          placeholder='Public Key'
+          cols='30'
+          rows='3'
           style={{ maxWidth: '100%' }}
         />
       </div>
 
-
-      {!!privateKey && !!publicKey && <button onClick={onDownloadKeys}>Download keys</button>}
+      {!!privateKey && !!publicKey && (
+        <button onClick={onDownloadKeys}>Download keys</button>
+      )}
 
       {!!revocationCertificate && (
-        <input type="text" value={revocationCertificate} disabled />
+        <input type='text' value={revocationCertificate} disabled />
       )}
 
       {children({ onEncrypt, onDecrypt })}

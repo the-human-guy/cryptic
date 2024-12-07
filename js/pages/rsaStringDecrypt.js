@@ -1,73 +1,70 @@
-import { generateRSAKeyPair, encryptStringRsa, decryptStringRsa } from "../utils/rsa_encryption.js";
-import { isBase64 } from "../utils/rgx_test.js";
+import {
+  generateRSAKeyPair,
+  encryptStringRsa,
+  decryptStringRsa,
+} from '../utils/rsa_encryption.js'
+import { isBase64 } from '../utils/rgx_test.js'
 
 const { useEffect, useState } = React
 
 export const RsaStringDecryptPage = () => {
-  const [intputString, setIntputString] = useState("");
-  const [decryptedString, setDecryptedString] = useState("");
+  const [intputString, setIntputString] = useState('')
+  const [decryptedString, setDecryptedString] = useState('')
   const [rsaKeyPair, setRsaKeyPair] = useState({
-    publicKey: "",
-    privateKey: "",
-  });
-
-
+    publicKey: '',
+    privateKey: '',
+  })
 
   const changeFilePemPrivate = (files) => {
-    const file = files[0];
+    const file = files[0]
     if (!file) {
-      return;
+      return
     }
     if (file.size > 1024 * 1024 * 50) {
-      return alert("文件太大");
+      return alert('文件太大')
     }
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = async function () {
-      const privateKey = reader.result;
+      const privateKey = reader.result
       setRsaKeyPair({
         ...rsaKeyPair,
         privateKey: privateKey,
-      });
-    };
-    reader.readAsText(file);
-  };
-
-
+      })
+    }
+    reader.readAsText(file)
+  }
 
   const decryptKeyRsa = async () => {
-    try{
-      const decryptedKey = await decryptStringRsa(intputString, rsaKeyPair.privateKey);
-    
-      setDecryptedString(decryptedKey);
-    }catch(err){
+    try {
+      const decryptedKey = await decryptStringRsa(
+        intputString,
+        rsaKeyPair.privateKey,
+      )
+
+      setDecryptedString(decryptedKey)
+    } catch (err) {
       alert('Decryption failed.')
     }
-    
+
     // const decryptedKey = await decryptStringRsa(encryptedKey, rsaKeyPair.privateKey);
     // console.log('decrypt: ',decryptedKey)
-  };
+  }
 
   const onKeyInputChange = async (e) => {
-    setIntputString(e.target.value);
-  };
+    setIntputString(e.target.value)
+  }
 
   return (
     <>
       <div>
-      <h1>RSA String Decrypt</h1>
+        <h1>RSA String Decrypt</h1>
         <div>
           <div>
-            <label
-              htmlFor="small-input"
-            >
+            <label htmlFor='small-input'>
               Input Rsa Encrypted String (Base64) (ex.
-                KbQhUn9U2mm96q4ZARf7k8gF7+Ir/HGn/Xa1EFkPvtGDJvyvxqi/SkF+jYUZk1Nb/5QZWl6MXjQhws242K3KGh7j4G2LC6/wv7lkHU4vm5DmYv5HnDKGrDQFzYioYL6/x3M2RSySDqCnTZ73bCR2MHhPL5Js5rxP2LkcDnuG8oePF3cd09PeFlyDBNjl/iY57Xx/7pWWi6T0MbQCQdMDeoFELQZIXaVTWLzHuJO6P8zrtCmLORarmdBtsnq7e1YaSWQJoPBjuGtcpzQYKiUjbwvDYBW69/9/u70V7G+F4m1cL2ESfu8+wsLIQgW3B6eRgo0RvPbvM+BiZxSl5LZWVQ==)
+              KbQhUn9U2mm96q4ZARf7k8gF7+Ir/HGn/Xa1EFkPvtGDJvyvxqi/SkF+jYUZk1Nb/5QZWl6MXjQhws242K3KGh7j4G2LC6/wv7lkHU4vm5DmYv5HnDKGrDQFzYioYL6/x3M2RSySDqCnTZ73bCR2MHhPL5Js5rxP2LkcDnuG8oePF3cd09PeFlyDBNjl/iY57Xx/7pWWi6T0MbQCQdMDeoFELQZIXaVTWLzHuJO6P8zrtCmLORarmdBtsnq7e1YaSWQJoPBjuGtcpzQYKiUjbwvDYBW69/9/u70V7G+F4m1cL2ESfu8+wsLIQgW3B6eRgo0RvPbvM+BiZxSl5LZWVQ==)
             </label>
-            <input
-              onChange={onKeyInputChange}
-              type="text"
-              id="small-input"
-            />
+            <input onChange={onKeyInputChange} type='text' id='small-input' />
             {intputString && !isBase64(intputString) && (
               <div>Key must be valid Base64 string</div>
             )}
@@ -103,13 +100,11 @@ export const RsaStringDecryptPage = () => {
               Download Pem Files
             </button> */}
             <div>
-              <label
-                htmlFor="dropzone-file-pem-private"
-              >
+              <label htmlFor='dropzone-file-pem-private'>
                 Import Private Key Pem File
                 <input
-                  id="dropzone-file-pem-private"
-                  type="file"
+                  id='dropzone-file-pem-private'
+                  type='file'
                   onChange={(e) => changeFilePemPrivate(e.target.files)}
                 />
               </label>
@@ -118,8 +113,7 @@ export const RsaStringDecryptPage = () => {
           {rsaKeyPair && (rsaKeyPair.privateKey || rsaKeyPair.publicKey) && (
             <>
               <div>
-                <span>Encryption algorithm:</span>{" "}
-                RSA-OAEP
+                <span>Encryption algorithm:</span> RSA-OAEP
               </div>
               <div>
                 <span>Modulus length:</span> 2048
@@ -133,9 +127,9 @@ export const RsaStringDecryptPage = () => {
                     <textarea
                       disabled
                       value={rsaKeyPair.privateKey}
-                      id="message"
-                      rows="6"
-                      placeholder="Write your thoughts here..."
+                      id='message'
+                      rows='6'
+                      placeholder='Write your thoughts here...'
                     ></textarea>
                   </div>
                 )}
@@ -144,35 +138,34 @@ export const RsaStringDecryptPage = () => {
                     <textarea
                       disabled
                       value={rsaKeyPair.publicKey}
-                      id="message"
-                      rows="6"
-                      placeholder="Write your thoughts here..."
+                      id='message'
+                      rows='6'
+                      placeholder='Write your thoughts here...'
                     ></textarea>
                   </div>
                 )}
               </div>
-              {(rsaKeyPair.privateKey && intputString && isBase64(intputString)) && (
-                <>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={decryptKeyRsa}
-                    >
-                      Decrypt the input key with RSA
-                    </button>
-                  </div>
-                  {decryptedString && (
+              {rsaKeyPair.privateKey &&
+                intputString &&
+                isBase64(intputString) && (
+                  <>
                     <div>
-                    <span>Decrypted string: </span>{decryptedString}
-                  </div>
-                  )}
-                  
-                </>
-              )}
+                      <button type='button' onClick={decryptKeyRsa}>
+                        Decrypt the input key with RSA
+                      </button>
+                    </div>
+                    {decryptedString && (
+                      <div>
+                        <span>Decrypted string: </span>
+                        {decryptedString}
+                      </div>
+                    )}
+                  </>
+                )}
             </>
           )}
         </div>
       </div>
     </>
-  );
-};
+  )
+}

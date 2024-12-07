@@ -1,11 +1,7 @@
-const {
-  BrowserRouter,
-  Routes,
-  Route
-} = ReactRouterDOM
+const { BrowserRouter, Routes, Route } = ReactRouterDOM
 
-import { HomePage } from "./pages/home.js";
-import { Header } from "./components/header/menu.js";
+import { HomePage } from './pages/home.js'
+import { Header } from './components/header/menu.js'
 
 const BASE_URL = location.pathname
 
@@ -14,8 +10,8 @@ export const App = () => {
     <BrowserRouter basename={BASE_URL}>
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path='/' element={<HomePage />} />
       </Routes>
-    </BrowserRouter>    
-  );
-};
+    </BrowserRouter>
+  )
+}

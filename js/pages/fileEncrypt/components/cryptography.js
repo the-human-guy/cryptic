@@ -1,6 +1,6 @@
-import { CryptographyCBC } from './cryptography-cbc.js';
-import { CryptographyGCM } from './cryptography-gcm.js';
-import { CryptographyPGP } from './cryptography-pgp.js';
+import { CryptographyCBC } from './cryptography-cbc.js'
+import { CryptographyGCM } from './cryptography-gcm.js'
+import { CryptographyPGP } from './cryptography-pgp.js'
 const { useEffect, useState } = React
 
 const CRYPTO_ALGO = {
@@ -24,35 +24,39 @@ export const Cryptography = (props) => {
     onFileEncrypt: onFileEncryptProp,
     onFileDecrypt: onFileDecryptProp,
   } = props
-  const [selectedAlgo, selectAlgo] = useState('PGP');
+  const [selectedAlgo, selectAlgo] = useState('PGP')
   //const [selectedAlgo, selectAlgo] = useState(GCM);
   const [fileArrayBuffer, setFileArrayBuffer] = useState(null)
 
   useEffect(() => {
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = async function () {
       setFileArrayBuffer(reader.result)
-    };
-    reader.readAsArrayBuffer(file);
+    }
+    reader.readAsArrayBuffer(file)
   }, [file])
 
   const onFileEncrypt = (buffer, ...args) => {
-    const newFile = new File([new Blob([buffer])], `enc-${file.name}`, { type: file.type });
+    const newFile = new File([new Blob([buffer])], `enc-${file.name}`, {
+      type: file.type,
+    })
     onFileEncryptProp(newFile, ...args)
   }
 
   const onFileDecrypt = (buffer, ...args) => {
-    const newFile = new File([new Blob([buffer])], `dec-${file.name}`, { type: file.type });
+    const newFile = new File([new Blob([buffer])], `dec-${file.name}`, {
+      type: file.type,
+    })
     onFileEncryptProp(newFile, ...args)
   }
 
   const CryptoComponent = CRYPTO_ALGO[selectedAlgo].Component || 'div'
 
   return (
-    <div className="card info" style={{ minWidth: 0 }}>
+    <div className='card info' style={{ minWidth: 0 }}>
       <p>Cryptography</p>
 
-      <select onChange={e => selectAlgo(e.target.value)} value={selectedAlgo}>
+      <select onChange={(e) => selectAlgo(e.target.value)} value={selectedAlgo}>
         {Object.entries(CRYPTO_ALGO).map(([key, algo]) => (
           <option value={key}>{algo.label}</option>
         ))}
@@ -62,16 +66,10 @@ export const Cryptography = (props) => {
         <CryptoComponent arrayBuffer={fileArrayBuffer}>
           {({ onEncrypt, onDecrypt }) => (
             <div>
-              <button
-                type="button"
-                onClick={() => onEncrypt(onFileEncrypt)}
-              >
+              <button type='button' onClick={() => onEncrypt(onFileEncrypt)}>
                 Encrypt
               </button>
-              <button
-                type="button"
-                onClick={() => onDecrypt(onFileDecrypt)}
-              >
+              <button type='button' onClick={() => onDecrypt(onFileDecrypt)}>
                 Decrypt
               </button>
             </div>
