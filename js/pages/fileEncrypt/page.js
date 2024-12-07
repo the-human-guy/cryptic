@@ -6,7 +6,7 @@ const { useEffect, useState } = React
 const FILE_MAX_SIZE = 1024 * 1024 * 50
 const FILE_MAX_SIZE_LABEL = 'max. 50MB'
 
-export function AesFileEncryptPage() {
+export function FileEncryptPage() {
   const [filesList, setFilesList] = useState([]);
   const [selectedFile, selectFile] = useState(null);
   const [usingEditor, setUsingEditor] = useState(false)

@@ -3,7 +3,9 @@ import {
   decrypt,
   generateKeys,
 } from "../../../utils/pgp.js";
+import { selectFileAndRead } from '../../../utils/files.js'
 import { PasswordInput } from '../../../components/passwordInput.js';
+
 const { useEffect, useState } = React
 
 export const CryptographyPGP = ({
@@ -62,9 +64,22 @@ export const CryptographyPGP = ({
     }
   };
 
+  // const onUploadKeys = () => 
+
   return (
     <div>
       <button onClick={onGenerateKeys}>Generate keys</button>
+      <button
+        onClick={async () => {
+          const keysFile = await selectFileAndRead()
+          // uploaded keys
+          // todo make download keys button first
+          // DL as 2 files
+          // DL as 1 file
+        }}
+      >
+        Upload keys
+      </button>
       
       <div>
         <textarea
@@ -75,6 +90,7 @@ export const CryptographyPGP = ({
           placeholder="Private Key"
           cols="30"
           rows="10"
+          style={{ maxWidth: '100%' }}
         />
       </div>
 
@@ -87,6 +103,7 @@ export const CryptographyPGP = ({
           placeholder="Public Key"
           cols="30"
           rows="10"
+          style={{ maxWidth: '100%' }}
         />
       </div>
 

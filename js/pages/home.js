@@ -1,4 +1,4 @@
-import { AesFileEncryptPage } from "../pages/aesFileEncrypt/page.js";
+import { FileEncryptPage } from "../pages/fileEncrypt/page.js";
 import { RsaStringEncryptPage } from "./rsaStringEncrypt.js";
 import { RsaStringDecryptPage } from "./rsaStringDecrypt.js";
 
@@ -10,7 +10,7 @@ export const HomePage = () => {
   return (
     <>
     
-      {(!searchParams.get('page') || searchParams.get('page') === "aes_file_encrypt") && <AesFileEncryptPage/>}
+      {(!searchParams.get('page') || searchParams.get('page') === "aes_file_encrypt") && <FileEncryptPage/>}
       { searchParams.get('page') === "rsa_key_encrypt" && <RsaStringEncryptPage/>}
       { searchParams.get('page') === "rsa_key_decrypt" && <RsaStringDecryptPage/>}
       
