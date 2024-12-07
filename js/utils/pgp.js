@@ -1,3 +1,13 @@
+const pubKeyRegex = /(-----BEGIN PGP PUBLIC KEY BLOCK-----).*([a-zA-Z0-9//\n\/\.\:\+\ \=]+).*(-----END PGP PUBLIC KEY BLOCK-----)/
+const privKeyRegex = /(-----BEGIN PGP PRIVATE KEY BLOCK-----).*([a-zA-Z0-9//\n\/\.\:\+\ \=]+).*(-----END PGP PRIVATE KEY BLOCK-----)/
+
+export const parseKeys = (text) => {
+  const pubKey = text.match(pubKeyRegex)?.[0]
+  const privKey = text.match(privKeyRegex)?.[0]
+  return { pubKey, privKey }
+}
+
+
 export const encrypt = async ({
   input: secretData,
   publicKeyArmored,

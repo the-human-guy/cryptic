@@ -2,8 +2,9 @@ import {
   encrypt,
   decrypt,
   generateKeys,
+  parseKeys,
 } from "../../../utils/pgp.js";
-import { selectFileAndRead } from '../../../utils/files.js'
+import { selectFileAndRead, downloadText } from '../../../utils/files.js'
 import { PasswordInput } from '../../../components/passwordInput.js';
 
 const { useEffect, useState } = React
@@ -22,6 +23,10 @@ export const CryptographyPGP = ({
     setPrivateKey(privateKey)
     setPublicKey(publicKey)
     setRevocationCertificate(revocationCertificate)
+  }
+
+  const onDownloadKeys = async () => {
+    downloadText(privateKey + '\n\n' + publicKey, 'keys.txt') 
   }
 
   const onEncrypt = async (onSuccess) => {
@@ -64,23 +69,26 @@ export const CryptographyPGP = ({
     }
   };
 
-  // const onUploadKeys = () => 
-
   return (
     <div>
       <button onClick={onGenerateKeys}>Generate keys</button>
       <button
         onClick={async () => {
-          const keysFile = await selectFileAndRead()
-          // uploaded keys
-          // todo make download keys button first
-          // DL as 2 files
-          // DL as 1 file
+          const { privKey, pubKey } = parseKeys(await selectFileAndRead())
+          setPrivateKey(privKey)
+          setPublicKey(pubKey)
         }}
       >
         Upload keys
       </button>
       
+      <PasswordInput
+        onChange={(e) => setPassphrase(e.target.value)}
+        value={passphrase}
+        placeholder="Passphrase"
+        id="input-pass"
+      />
+
       <div>
         <textarea
           onChange={(e) => setPrivateKey(e.target.value)}
@@ -89,7 +97,7 @@ export const CryptographyPGP = ({
           name="privateKey"
           placeholder="Private Key"
           cols="30"
-          rows="10"
+          rows="3"
           style={{ maxWidth: '100%' }}
         />
       </div>
@@ -102,17 +110,13 @@ export const CryptographyPGP = ({
           name="publicKey"
           placeholder="Public Key"
           cols="30"
-          rows="10"
+          rows="3"
           style={{ maxWidth: '100%' }}
         />
       </div>
 
-      <PasswordInput
-        onChange={(e) => setPassphrase(e.target.value)}
-        value={passphrase}
-        placeholder="Passphrase"
-        id="input-pass"
-      />
+
+      {!!privateKey && !!publicKey && <button onClick={onDownloadKeys}>Download keys</button>}
 
       {!!revocationCertificate && (
         <input type="text" value={revocationCertificate} disabled />

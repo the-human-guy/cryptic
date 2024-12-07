@@ -21,13 +21,28 @@ export function readFile(file, readerFunc = "readAsText") {
   });
 }
 
-//
+
 //readAsBinaryString
 //readAsArrayBuffer
 //readAsDataURL
-//
 export async function selectFileAndRead(readerFunc = "readAsText") {
-  const file = await selectFileToRead();
+  const file = await selectFile();
   const content = await readFile(file);
   return content
 }
+
+
+export const downloadFile = (file) => {
+  const tempEl = document.createElement("a");
+  document.body.appendChild(tempEl);
+  const url = window.URL.createObjectURL(file);
+  tempEl.href = url;
+  tempEl.download = file.name;
+  tempEl.click();
+  window.URL.revokeObjectURL(url);
+};
+
+
+export const downloadText = (text, fileName = "new-file.txt") => {
+  return downloadFile(new File([new Blob([text])], fileName, { type: 'text/plain' }))
+};

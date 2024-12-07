@@ -1,5 +1,6 @@
 import { FileEditor } from './components/fileEditor.js';
 import { Cryptography } from './components/cryptography.js';
+import { downloadFile } from '../../utils/files.js'
 
 const { useEffect, useState } = React
 
@@ -39,16 +40,6 @@ export function FileEncryptPage() {
     setFilesList([])
     setUsingEditor(false);
   }
-
-  const downloadFile = (file) => {
-    const tempEl = document.createElement("a");
-    document.body.appendChild(tempEl);
-    const url = window.URL.createObjectURL(file);
-    tempEl.href = url;
-    tempEl.download = file.name;
-    tempEl.click();
-    window.URL.revokeObjectURL(url);
-  };
 
   return (
     <main style={{ paddingBottom: '7rem' }}>
