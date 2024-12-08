@@ -2,8 +2,8 @@ import {
   generateRSAKeyPair,
   encryptStringRsa,
   decryptStringRsa,
-} from '../utils/rsa_encryption.js'
-import { isBase64 } from '../utils/rgx_test.js'
+} from '../utils/rsa-encryption.js'
+import { isBase64 } from '../utils/rgx-test.js'
 
 const { useEffect, useState } = React
 

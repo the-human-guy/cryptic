@@ -15,7 +15,7 @@ async function handleRequest(request) {
   }
   const url = new URL(request.url)
   const r = await fetch(request)
-  if (r.status === 200 & url.host === location.host && url.pathname.endsWith('.js') && !url.pathname.startsWith('./lib')) {
+  if (r.status === 200 & url.host === location.host && (url.pathname.endsWith('.js') || url.pathname.endsWith('.jsx')) && !url.pathname.startsWith('./lib')) {
     const jsx = await r.text()
     const js = Babel.transform(jsx, {presets: ['react']}).code
     return new Response(js, r)

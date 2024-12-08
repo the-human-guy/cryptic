@@ -1,8 +1,8 @@
-import { FileEditor } from './components/fileEditor.js'
-import { Cryptography } from './components/cryptography.js'
+import { FileEditor } from './components/file-editor.jsx'
+import { Cryptography } from './components/cryptography.jsx'
 import { downloadFile } from '../../utils/files.js'
 
-const { useEffect, useState } = React
+const { useState } = React
 
 const FILE_MAX_SIZE = 1024 * 1024 * 50
 const FILE_MAX_SIZE_LABEL = 'max. 50MB'

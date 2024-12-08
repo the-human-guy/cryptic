@@ -1,7 +1,7 @@
 import {
   generateRSAKeyPair,
   encryptStringRsa,
-} from '../utils/rsa_encryption.js'
+} from '../utils/rsa-encryption.js'
 
 const { useState } = React
 

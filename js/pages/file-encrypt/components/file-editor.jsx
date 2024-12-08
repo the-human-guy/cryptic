@@ -1,4 +1,4 @@
-import { FileEditorImagePreview } from './fileEditor-img-preview.js'
+import { FileEditorImagePreview } from './file-editor-img-preview.jsx'
 const { useEffect, useState } = React
 /*
 todo: add more editor options:

@@ -4,7 +4,7 @@ import {
   SALT_BYTE_SIZE,
   IV_BYTE_SIZE,
 } from '../../../utils/aes-gcm.js'
-import { PasswordInput } from '../../../components/passwordInput.js'
+import { PasswordInput } from '../../../components/password-input.jsx'
 const { useEffect, useState } = React
 
 const PACKAGE_MODE = {

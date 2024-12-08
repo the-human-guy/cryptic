@@ -5,7 +5,7 @@ import {
   parseKeys,
 } from '../../../utils/pgp.js'
 import { selectFileAndRead, downloadText } from '../../../utils/files.js'
-import { PasswordInput } from '../../../components/passwordInput.js'
+import { PasswordInput } from '../../../components/password-input.jsx'
 
 const { useEffect, useState } = React
 

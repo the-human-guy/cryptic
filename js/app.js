@@ -1,7 +1,7 @@
 const { BrowserRouter, Routes, Route } = ReactRouterDOM
 
-import { HomePage } from './pages/home.js'
-import { Header } from './components/header/menu.js'
+import { HomePage } from './pages/home.jsx'
+import { Header } from './components/header/menu.jsx'
 
 const BASE_URL = location.pathname
 
