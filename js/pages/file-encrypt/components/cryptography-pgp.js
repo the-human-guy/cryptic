@@ -6,6 +6,7 @@ import {
 } from '../../../utils/pgp.js'
 import { selectFileAndRead, downloadText } from '../../../utils/files.js'
 import { PasswordInput } from '../../../components/password-input.js'
+import { InputSmartCover } from '../../../components/input-smart-cover.js'
 
 const { useEffect, useState } = React
 
@@ -70,7 +71,6 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
 
   return (
     <div>
-      <button onClick={onGenerateKeys}>Generate keys</button>
       <button
         onClick={async () => {
           const { privKey, pubKey } = parseKeys(await selectFileAndRead())
@@ -81,45 +81,94 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
         Upload keys
       </button>
 
-      <PasswordInput
-        onChange={(e) => setPassphrase(e.target.value)}
-        value={passphrase}
-        placeholder='Passphrase'
-        id='input-pass'
-      />
-
-      <div>
-        <textarea
-          onChange={(e) => setPrivateKey(e.target.value)}
-          value={privateKey}
-          id='privateKey'
-          name='privateKey'
-          placeholder='Private Key'
-          cols='30'
-          rows='3'
-          style={{ maxWidth: '100%' }}
+      <div
+        className='row m-0'
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <PasswordInput
+          onChange={(e) => setPassphrase(e.target.value)}
+          value={passphrase}
+          placeholder='Passphrase'
+          id='input-pass'
+          data-testid='pgp-input-passphrase'
+          className='m-0'
         />
+        <button data-testid='pgp-gen-keys-btn' onClick={onGenerateKeys}>
+          Generate keys
+        </button>
       </div>
 
       <div>
-        <textarea
-          onChange={(e) => setPublicKey(e.target.value)}
+        <InputSmartCover
+          onChange={setPrivateKey}
+          value={privateKey}
+          name='privateKey'
+          actionCopy
+          actionDownload
+          actionUpload
+        >
+          <textarea
+            onChange={(e) => setPrivateKey(e.target.value)}
+            value={privateKey}
+            id='privateKey'
+            name='privateKey'
+            placeholder='Private Key'
+            cols='30'
+            rows='3'
+            data-testid='pgp-input-privkey'
+            style={{ maxWidth: '100%' }}
+          />
+        </InputSmartCover>
+      </div>
+
+      <div>
+        {' '}
+        <InputSmartCover
+          onChange={setPublicKey}
           value={publicKey}
-          id='publicKey'
           name='publicKey'
-          placeholder='Public Key'
-          cols='30'
-          rows='3'
-          style={{ maxWidth: '100%' }}
-        />
+          actionCopy
+          actionDownload
+          actionUpload
+        >
+          <textarea
+            onChange={(e) => setPublicKey(e.target.value)}
+            value={publicKey}
+            id='publicKey'
+            name='publicKey'
+            placeholder='Public Key'
+            cols='30'
+            rows='3'
+            data-testid='pgp-input-pubkey'
+            style={{ maxWidth: '100%' }}
+          />
+        </InputSmartCover>
       </div>
 
       {!!privateKey && !!publicKey && (
-        <button onClick={onDownloadKeys}>Download keys</button>
+        <button data-testid='pgp-download-keys-btn' onClick={onDownloadKeys}>
+          Download keys
+        </button>
       )}
 
       {!!revocationCertificate && (
-        <input type='text' value={revocationCertificate} disabled />
+        <InputSmartCover
+          value={revocationCertificate}
+          name='revocCert'
+          actionCopy
+          actionDownload
+        >
+          <input
+            data-testid='pgp-revoc-cert-input'
+            name='revocCert'
+            type='text'
+            value={revocationCertificate}
+            disabled
+          />
+        </InputSmartCover>
       )}
 
       {children({ onEncrypt, onDecrypt })}

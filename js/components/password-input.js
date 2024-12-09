@@ -1,4 +1,4 @@
-const { useEffect, useState } = React
+const { useState } = React
 
 export const PasswordInput = (props) => {
   const [revealing, setRevealing] = useState(false)
