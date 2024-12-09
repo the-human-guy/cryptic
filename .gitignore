@@ -2,3 +2,5 @@ tmp/
 .vscode/
 node_modules/
 Session.vim
+package-lock.json
+package.json
