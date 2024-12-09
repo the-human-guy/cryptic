@@ -3,8 +3,8 @@ import {
   decrypt,
   SALT_BYTE_SIZE,
   IV_BYTE_SIZE,
-} from '../../../utils/aes-cbc.js'
-import { PasswordInput } from '../../../components/password-input.jsx'
+} from '../../../utils/aes-gcm.js'
+import { PasswordInput } from '../../../components/password-input.js'
 const { useEffect, useState } = React
 
 const PACKAGE_MODE = {
@@ -33,7 +33,7 @@ const PACKAGE_MODE = {
   },
 }
 
-export const CryptographyCBC = ({ arrayBuffer, children }) => {
+export const CryptographyGCM = ({ arrayBuffer, children }) => {
   const [passphrase, setPassphrase] = useState('')
   const [cryptoInfo, setCryptoInfo] = useState(null)
   const [selectedPackageMode, setSelectedPackageMode] = useState(

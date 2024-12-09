@@ -1,6 +1,6 @@
-import { CryptographyCBC } from './cryptography-cbc.jsx'
-import { CryptographyGCM } from './cryptography-gcm.jsx'
-import { CryptographyPGP } from './cryptography-pgp.jsx'
+import { CryptographyCBC } from './cryptography-cbc.js'
+import { CryptographyGCM } from './cryptography-gcm.js'
+import { CryptographyPGP } from './cryptography-pgp.js'
 const { useEffect, useState } = React
 
 const CRYPTO_ALGO = {

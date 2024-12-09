@@ -1,6 +1,6 @@
-import { FileEncryptPage } from '../pages/fileEncrypt/page.jsx'
-import { RsaStringEncryptPage } from './rsa-string-encrypt.jsx'
-import { RsaStringDecryptPage } from './rsa-string-decrypt.jsx'
+import { FileEncryptPage } from '../pages/file-encrypt/page.js'
+import { RsaStringEncryptPage } from './rsa-string-encrypt.js'
+import { RsaStringDecryptPage } from './rsa-string-decrypt.js'
 
 const { useSearchParams } = ReactRouterDOM
 

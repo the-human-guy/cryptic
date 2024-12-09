@@ -1,5 +1,5 @@
-import { FileEditor } from './components/file-editor.jsx'
-import { Cryptography } from './components/cryptography.jsx'
+import { FileEditor } from './components/file-editor.js'
+import { Cryptography } from './components/cryptography.js'
 import { downloadFile } from '../../utils/files.js'
 
 const { useState } = React
@@ -101,7 +101,7 @@ export function FileEncryptPage() {
                 </div>
                 <div>
                   <span>Last modified date:</span>{' '}
-                  {selectedFile.lastModifiedDate.toString()}
+                  {selectedFile.lastModifiedDate?.toString()}
                 </div>
                 <div>
                   <span>Size:</span> {selectedFile.size}
