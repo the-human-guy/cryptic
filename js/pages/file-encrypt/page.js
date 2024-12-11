@@ -70,11 +70,11 @@ export function FileEncryptPage() {
             </label>
             <button
               type='button'
+              data-testid='upload-file-btn'
               onClick={async () => {
                 const fileContents = await selectFileFromFS()
                 onFileUpload(fileContents)
               }}
-              data-testid='reset-form-btn'
             >
               Choose File
             </button>
