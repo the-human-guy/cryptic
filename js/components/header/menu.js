@@ -6,7 +6,7 @@ export const Header = () => {
       <nav>
         <ul>
           <li>
-            <Link to='/?page=aes_file_encrypt'>AES File Encrypt & Decrypt</Link>
+            <Link to='/?page=aes_file_encrypt'>File Encrypt & Decrypt</Link>
           </li>
           <li>
             <Link to='/?page=rsa_key_encrypt'>RSA String Encrypt</Link>
