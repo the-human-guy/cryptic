@@ -2,6 +2,7 @@ import * as gcm from '../../../utils/aes-gcm.js'
 import * as cbc from '../../../utils/aes-cbc.js'
 
 import { PasswordInput } from '../../../components/password-input.js'
+import { InputSmartCover } from '../../../components/input-smart-cover.js'
 const { useState } = React
 
 const getPackageMode = (utils) => ({
@@ -84,6 +85,7 @@ export const CryptographyAES = ({ mode = 'gcm', arrayBuffer, children }) => {
         <label htmlFor='input-pass'>Input passphrase (ex. 123456)</label>
         <PasswordInput
           onChange={(e) => setPassphrase(e.target.value)}
+          data-testid={`aes-passphrase-input`}
           id='input-pass'
         />
       </div>
@@ -93,6 +95,7 @@ export const CryptographyAES = ({ mode = 'gcm', arrayBuffer, children }) => {
       <select
         onChange={(e) => selectKeyExtractability(e.target.value)}
         value={isKeyExtractable}
+        data-testid={`aes-key-extractability-selector`}
       >
         <option value={false}>
           Non-extractable AES key (safe, encrypt-only)
@@ -109,13 +112,24 @@ export const CryptographyAES = ({ mode = 'gcm', arrayBuffer, children }) => {
             <fieldset>
               {Object.entries(cryptoInfo).map(([propName, propValue]) => (
                 <>
-                  <label for={'cryptoInfo_' + propName}>{propName}</label>
-                  <input
-                    type='text'
-                    id={'cryptoInfo_' + propName}
+                  <label for={'cryptoInfo_' + propName}>
+                    <b>{propName}</b>
+                  </label>
+
+                  <InputSmartCover
                     value={propValue}
-                    disabled
-                  />
+                    name={propName}
+                    actionCopy
+                    actionDownload
+                    data-testid={'cryptoInfo_' + propName}
+                  >
+                    <input
+                      type='text'
+                      id={'cryptoInfo_' + propName}
+                      value={propValue}
+                      disabled
+                    />
+                  </InputSmartCover>
                 </>
               ))}
             </fieldset>

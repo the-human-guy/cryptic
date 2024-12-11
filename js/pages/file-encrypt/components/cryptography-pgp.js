@@ -72,6 +72,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
   return (
     <div>
       <button
+        data-testid='pgp-btn-upload-keys'
         onClick={async () => {
           const { privKey, pubKey } = parseKeys(await selectFileAndRead())
           setPrivateKey(privKey)
@@ -150,7 +151,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
       </div>
 
       {!!privateKey && !!publicKey && (
-        <button data-testid='pgp-download-keys-btn' onClick={onDownloadKeys}>
+        <button data-testid='pgp-btn-download-keys' onClick={onDownloadKeys}>
           Download keys
         </button>
       )}

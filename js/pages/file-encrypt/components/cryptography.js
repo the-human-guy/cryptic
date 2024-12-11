@@ -55,7 +55,11 @@ export const Cryptography = (props) => {
     <div className='card info' style={{ minWidth: 0 }}>
       <p>Cryptography</p>
 
-      <select onChange={(e) => selectAlgo(e.target.value)} value={selectedAlgo}>
+      <select
+        onChange={(e) => selectAlgo(e.target.value)}
+        value={selectedAlgo}
+        data-testid='crypto-algo-selector'
+      >
         {Object.entries(CRYPTO_ALGO).map(([key, algo]) => (
           <option value={key}>{algo.label}</option>
         ))}
@@ -65,10 +69,18 @@ export const Cryptography = (props) => {
         <CryptoComponent arrayBuffer={fileArrayBuffer}>
           {({ onEncrypt, onDecrypt }) => (
             <div>
-              <button type='button' onClick={() => onEncrypt(onFileEncrypt)}>
+              <button
+                type='button'
+                data-testid='crypto-btn-encrypt'
+                onClick={() => onEncrypt(onFileEncrypt)}
+              >
                 Encrypt
               </button>
-              <button type='button' onClick={() => onDecrypt(onFileDecrypt)}>
+              <button
+                type='button'
+                data-testid='crypto-btn-decrypt'
+                onClick={() => onDecrypt(onFileDecrypt)}
+              >
                 Decrypt
               </button>
             </div>

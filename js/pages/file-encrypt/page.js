@@ -47,12 +47,16 @@ export function FileEncryptPage() {
         <div class='col col-2'>
           {/* file input */}
           <div>
-            <label htmlFor='dropzone-file'>
+            <label
+              htmlFor='dropzone-file'
+              data-testid='dropzone-file-input-wrapper'
+            >
               <span>Click to upload a file ({FILE_MAX_SIZE_LABEL})</span>
               <input
                 id='dropzone-file'
                 className='dropzone-file-input'
                 type='file'
+                data-testid='dropzone-file-input'
                 onChange={(e) => {
                   onFileUpload(e.target.files)
                   setUsingEditor(false)
@@ -62,7 +66,11 @@ export function FileEncryptPage() {
             </label>
             {!!selectedFile && (
               <>
-                <button type='reset' onClick={resetForm}>
+                <button
+                  type='reset'
+                  onClick={resetForm}
+                  data-testid='reset-form-btn'
+                >
                   Reset
                 </button>
                 <hr className='my-1' />
@@ -70,20 +78,32 @@ export function FileEncryptPage() {
             )}
           </div>
 
-          <div className='file-list'>
+          <div className='file-list' data-testid='file-list'>
             {filesList.map((file, i) => (
-              <div className='file-list__item'>
+              <div
+                className='file-list__item'
+                data-testid={`file-list-item-${i}`}
+              >
                 <button
                   className={`file-list__filename ${file === selectedFile && 'file-list__filename--selected'}`}
                   tabIndex='0'
+                  data-testid={`file-list-item-${i}-filename`}
                   onClick={() => selectFile(file)}
                 >
                   {file.name}
                 </button>
-                <button onClick={() => removeFileFromList(file)} title='Remove'>
+                <button
+                  onClick={() => removeFileFromList(file)}
+                  title='Remove'
+                  data-testid={`file-list-item-${i}-remove`}
+                >
                   ✖️
                 </button>
-                <button onClick={() => downloadFile(file)} title='Download'>
+                <button
+                  onClick={() => downloadFile(file)}
+                  title='Download'
+                  data-testid={`file-list-item-${i}-save`}
+                >
                   💾
                 </button>
               </div>
@@ -97,21 +117,29 @@ export function FileEncryptPage() {
               <div className='card info'>
                 <p>File Info</p>
                 <div>
-                  <span>File name:</span> {selectedFile.name}
+                  <span>File name:</span>{' '}
+                  <span data-testid='file-info-filename'>
+                    {selectedFile.name}
+                  </span>
                 </div>
                 <div>
                   <span>Last modified date:</span>{' '}
-                  {selectedFile.lastModifiedDate?.toString()}
+                  <span data-testid='file-info-modified-date'>
+                    {selectedFile.lastModifiedDate?.toString()}
+                  </span>
                 </div>
                 <div>
-                  <span>Size:</span> {selectedFile.size}
+                  <span>Size:</span>{' '}
+                  <span data-testid='file-info-size'>{selectedFile.size}</span>
                 </div>
                 <div>
-                  <span>Type:</span> {selectedFile.type}
+                  <span>Type:</span>{' '}
+                  <span data-testid='file-info-type'>{selectedFile.type}</span>
                 </div>
                 <button
                   type='button'
                   onClick={() => setUsingEditor(!usingEditor)}
+                  data-testid='file-info-btn-edit'
                 >
                   Edit
                 </button>

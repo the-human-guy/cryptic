@@ -9,9 +9,10 @@ export const InputSmartCover = ({
   actionUpload,
   name = '',
   children,
+  ...restProps
 }) => {
   return (
-    <div className='input-smart-cover'>
+    <div className='input-smart-cover' {...restProps}>
       {children}
 
       <div className='input-smart-cover__btns'>
@@ -19,6 +20,7 @@ export const InputSmartCover = ({
           <div
             className='input-smart-cover__btn'
             title='Upload'
+            data-testid='isc-upload'
             onClick={async () => {
               const fileContents = await selectFileAndRead()
               onChange(fileContents)
@@ -32,6 +34,7 @@ export const InputSmartCover = ({
           <div
             className='input-smart-cover__btn'
             title='Download'
+            data-testid='isc-download'
             onClick={async () => {
               downloadText(value, name)
             }}
@@ -44,6 +47,7 @@ export const InputSmartCover = ({
           <div
             className='input-smart-cover__btn'
             title='Copy'
+            data-testid='isc-copy'
             onClick={async () => {
               copyTextToClipboard(value)
             }}
