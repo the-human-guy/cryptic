@@ -1,16 +1,13 @@
-import {
-  encrypt,
-  decrypt,
-  SALT_BYTE_SIZE,
-  IV_BYTE_SIZE,
-} from '../../../utils/aes-gcm.js'
-import { PasswordInput } from '../../../components/password-input.js'
-const { useEffect, useState } = React
+import * as gcm from '../../../utils/aes-gcm.js'
+import * as cbc from '../../../utils/aes-cbc.js'
 
-const PACKAGE_MODE = {
+import { PasswordInput } from '../../../components/password-input.js'
+const { useState } = React
+
+const getPackageMode = (utils) => ({
   prepend: {
     label: 'Prepend salt & IV',
-    description: `salt (${SALT_BYTE_SIZE} bytes) + iv (${IV_BYTE_SIZE} bytes) + cipherText`,
+    description: `salt (${utils.SALT_BYTE_SIZE} bytes) + iv (${utils.IV_BYTE_SIZE} bytes) + cipherText`,
     pack: ({ cipherText, iv, salt }) => {
       const encryptedContentArr = new Uint8Array(cipherText)
       let buff = new Uint8Array(
@@ -19,32 +16,35 @@ const PACKAGE_MODE = {
       buff.set(salt, 0)
       buff.set(iv, salt.byteLength)
       buff.set(encryptedContentArr, salt.byteLength + iv.byteLength)
+
       return buff.buffer
     },
     unpack: (arrayBuffer) => {
       const encryptedDataBuff = new Uint8Array(arrayBuffer)
-      const salt = encryptedDataBuff.slice(0, SALT_BYTE_SIZE)
+      const salt = encryptedDataBuff.slice(0, utils.SALT_BYTE_SIZE)
       const iv = encryptedDataBuff.slice(
-        SALT_BYTE_SIZE,
-        SALT_BYTE_SIZE + IV_BYTE_SIZE,
+        utils.SALT_BYTE_SIZE,
+        utils.SALT_BYTE_SIZE + utils.IV_BYTE_SIZE,
       )
       return { salt, iv }
     },
   },
-}
+})
 
-export const CryptographyGCM = ({ arrayBuffer, children }) => {
+// mode = 'cbc' | 'gcm'
+export const CryptographyAES = ({ mode = 'gcm', arrayBuffer, children }) => {
+  const utils = mode === 'gcm' ? gcm : cbc
   const [passphrase, setPassphrase] = useState('')
   const [cryptoInfo, setCryptoInfo] = useState(null)
-  const [selectedPackageMode, setSelectedPackageMode] = useState(
-    PACKAGE_MODE.prepend,
+  const [selectedPackageMode, selectPackageMode] = useState(
+    getPackageMode(utils)?.prepend,
   )
   const [isKeyExtractable, selectKeyExtractability] = useState(false)
 
   const encryptAes256 = async (onSuccess) => {
     if (arrayBuffer && passphrase) {
       try {
-        const encrypted = await encrypt({
+        const encrypted = await utils.encrypt({
           input: arrayBuffer,
           password: passphrase,
           extractableKey: isKeyExtractable,
@@ -63,7 +63,7 @@ export const CryptographyGCM = ({ arrayBuffer, children }) => {
     if (arrayBuffer && passphrase) {
       try {
         const { salt, iv } = selectedPackageMode.unpack(arrayBuffer)
-        const decrypted = await decrypt({
+        const decrypted = await utils.decrypt({
           input: arrayBuffer,
           password: passphrase,
           iv,

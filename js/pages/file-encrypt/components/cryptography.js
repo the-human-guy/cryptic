@@ -1,16 +1,15 @@
-import { CryptographyCBC } from './cryptography-cbc.js'
-import { CryptographyGCM } from './cryptography-gcm.js'
+import { CryptographyAES } from './cryptography-aes.js'
 import { CryptographyPGP } from './cryptography-pgp.js'
 const { useEffect, useState } = React
 
 const CRYPTO_ALGO = {
   GCM: {
     label: 'AES256-GCM',
-    Component: CryptographyGCM,
+    Component: (props) => <CryptographyAES mode='gcm' {...props} />,
   },
   CBC: {
     label: 'AES256-CBC',
-    Component: CryptographyCBC,
+    Component: (props) => <CryptographyAES mode='cbc' {...props} />,
   },
   PGP: {
     label: 'OpenPGP.js',
