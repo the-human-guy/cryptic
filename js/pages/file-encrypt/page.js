@@ -1,6 +1,9 @@
 import { FileEditor } from './components/file-editor.js'
 import { Cryptography } from './components/cryptography.js'
-import { downloadFile } from '../../utils/files.js'
+import {
+  downloadFile,
+  selectFile as selectFileFromFS,
+} from '../../utils/files.js'
 
 const { useState } = React
 
@@ -23,7 +26,7 @@ export function FileEncryptPage() {
   }
 
   const onFileUpload = (files) => {
-    const file = files[0]
+    const file = files?.[0] || files
     if (!file) {
       return
     }
@@ -48,6 +51,7 @@ export function FileEncryptPage() {
           {/* file input */}
           <div>
             <label
+              style={{ display: 'none' }}
               htmlFor='dropzone-file'
               data-testid='dropzone-file-input-wrapper'
             >
@@ -64,6 +68,16 @@ export function FileEncryptPage() {
                 }}
               />
             </label>
+            <button
+              type='button'
+              onClick={async () => {
+                const fileContents = await selectFileFromFS()
+                onFileUpload(fileContents)
+              }}
+              data-testid='reset-form-btn'
+            >
+              Choose File
+            </button>
             {!!selectedFile && (
               <>
                 <button
