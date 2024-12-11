@@ -63,6 +63,7 @@ html body {
 /* Input Smart Cover */
 .input-smart-cover {
   position: relative;
+  width: fit-content;
 }
 
 .input-smart-cover__btns {
@@ -72,6 +73,10 @@ html body {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  backdrop-filter: invert(0.2);
+  padding: 0.3rem;
+  line-height: 1rem;
+  border-radius: 3px;
 }
 
 .input-smart-cover__btn {
