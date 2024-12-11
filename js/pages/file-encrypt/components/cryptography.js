@@ -45,7 +45,7 @@ export const Cryptography = (props) => {
     const newFile = new File([new Blob([buffer])], `dec-${file.name}`, {
       type: file.type,
     })
-    onFileEncryptProp(newFile, ...args)
+    onFileDecryptProp(newFile, ...args)
   }
 
   const CryptoComponent = CRYPTO_ALGO[selectedAlgo].Component || 'div'
