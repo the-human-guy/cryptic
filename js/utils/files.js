@@ -30,7 +30,7 @@ export function readFile(file, readerFunc = 'readAsText') {
 //readAsDataURL
 export async function selectFileAndRead(readerFunc = 'readAsText') {
   const file = await selectFile()
-  const content = await readFile(file)
+  const content = await readFile(file, readerFunc)
   return content
 }
 
