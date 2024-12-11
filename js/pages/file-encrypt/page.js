@@ -10,6 +10,8 @@ const { useState } = React
 const FILE_MAX_SIZE = 1024 * 1024 * 50
 const FILE_MAX_SIZE_LABEL = 'max. 50MB'
 
+let newFileCounter = 0
+
 export function FileEncryptPage() {
   const [filesList, setFilesList] = useState([])
   const [selectedFile, selectFile] = useState(null)
@@ -19,10 +21,10 @@ export function FileEncryptPage() {
     selectFile(file)
   }
   const removeFileFromList = (file) => {
-    setFilesList((cur) => cur.filter((file1) => file1 !== file))
     if (selectedFile === file) {
-      selectFile(null)
+      selectFile(filesList[filesList.indexOf(file) - 1] || filesList[1] || null)
     }
+    setFilesList((cur) => cur.filter((file1) => file1 !== file))
   }
 
   const onFileUpload = (files) => {
@@ -82,10 +84,11 @@ export function FileEncryptPage() {
               type='button'
               data-testid='create-new-file-btn'
               onClick={async () => {
-                const newFile = new File([''], `new-file`, {
+                const newFile = new File([''], `new-file-${++newFileCounter}`, {
                   type: 'text/plain',
                 })
                 addFileToList(newFile)
+                setUsingEditor(true)
               }}
             >
               New File
