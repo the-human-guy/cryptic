@@ -10,7 +10,7 @@ export const HomePage = () => {
   return (
     <>
       {(!searchParams.get('page') ||
-        searchParams.get('page') === 'aes_file_encrypt') && <FileEncryptPage />}
+        searchParams.get('page') === 'file_encrypt') && <FileEncryptPage />}
       {searchParams.get('page') === 'rsa_key_encrypt' && (
         <RsaStringEncryptPage />
       )}
