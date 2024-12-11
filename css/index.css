@@ -12,6 +12,7 @@ html body {
 /* File Editor */
 .editor-preview-container {
   position: relative;
+  min-height: 30rem;
 }
 
 .editor-preview-container iframe {
