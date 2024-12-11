@@ -1,3 +1,4 @@
+import { readFile } from '../../../utils/files.js'
 import { FileEditorImagePreview } from './file-editor-img-preview.js'
 const { useEffect, useState } = React
 /*
@@ -22,16 +23,12 @@ export const FileEditor = ({ onSave, file: originalFile }) => {
   const [previewMode, setPreviewMode] = useState(false)
   const [editMode, setEditMode] = useState(false)
 
-  const resetToOriginalFile = () => {
-    console.log('resetToOriginalFile: ', originalFile)
+  const resetToOriginalFile = async () => {
+    // console.log('resetToOriginalFile: ', originalFile)
     if (!originalFile) return setFileContent(null)
 
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      const fileContent = event.target.result
-      setFileContent(fileContent)
-    }
-    reader.readAsText(originalFile)
+    const fileContent = await readFile(originalFile)
+    setFileContent(fileContent)
   }
 
   useEffect(() => {

@@ -21,7 +21,7 @@ export function readFile(file, readerFunc = 'readAsText') {
     reader.addEventListener('load', (e) => {
       resolve(e.target.result)
     })
-    reader[readerFunc](file)
+    reader[readerFunc]?.(file)
   })
 }
 

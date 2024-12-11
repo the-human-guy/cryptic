@@ -7,6 +7,7 @@ export const InputSmartCover = ({
   actionCopy,
   actionDownload,
   actionUpload,
+  actionDelete,
   name = '',
   children,
   ...restProps
@@ -16,6 +17,19 @@ export const InputSmartCover = ({
       {children}
 
       <div className='input-smart-cover__btns'>
+        {!!actionDelete && (
+          <div
+            className='input-smart-cover__btn'
+            title='Delete'
+            data-testid='isc-delete'
+            onClick={async () => {
+              onChange('')
+            }}
+          >
+            ❌
+          </div>
+        )}
+
         {!!actionUpload && (
           <div
             className='input-smart-cover__btn'

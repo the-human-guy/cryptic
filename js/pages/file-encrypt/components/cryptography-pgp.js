@@ -111,6 +111,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
           actionCopy
           actionDownload
           actionUpload
+          actionDelete
         >
           <textarea
             onChange={(e) => setPrivateKey(e.target.value)}
@@ -135,6 +136,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
           actionCopy
           actionDownload
           actionUpload
+          actionDelete
         >
           <textarea
             onChange={(e) => setPublicKey(e.target.value)}

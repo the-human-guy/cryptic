@@ -1,3 +1,4 @@
+import { readFile } from '../../../utils/files.js'
 import { CryptographyAES } from './cryptography-aes.js'
 import { CryptographyPGP } from './cryptography-pgp.js'
 const { useEffect, useState } = React
@@ -24,15 +25,13 @@ export const Cryptography = (props) => {
     onFileDecrypt: onFileDecryptProp,
   } = props
   const [selectedAlgo, selectAlgo] = useState('PGP')
-  //const [selectedAlgo, selectAlgo] = useState(GCM);
   const [fileArrayBuffer, setFileArrayBuffer] = useState(null)
 
   useEffect(() => {
-    const reader = new FileReader()
-    reader.onload = async function () {
-      setFileArrayBuffer(reader.result)
-    }
-    reader.readAsArrayBuffer(file)
+    ;(async () => {
+      const fileContent = await readFile(file, 'readAsArrayBuffer')
+      setFileArrayBuffer(fileContent)
+    })()
   }, [file])
 
   const onFileEncrypt = (buffer, ...args) => {

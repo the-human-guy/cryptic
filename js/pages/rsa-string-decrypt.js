@@ -4,6 +4,7 @@ import {
   decryptStringRsa,
 } from '../utils/rsa-encryption.js'
 import { isBase64 } from '../utils/rgx-test.js'
+import { readFile } from '../utils/files.js'
 
 const { useEffect, useState } = React
 
@@ -15,7 +16,7 @@ export const RsaStringDecryptPage = () => {
     privateKey: '',
   })
 
-  const changeFilePemPrivate = (files) => {
+  const changeFilePemPrivate = async (files) => {
     const file = files[0]
     if (!file) {
       return
@@ -23,15 +24,11 @@ export const RsaStringDecryptPage = () => {
     if (file.size > 1024 * 1024 * 50) {
       return alert('文件太大')
     }
-    const reader = new FileReader()
-    reader.onload = async function () {
-      const privateKey = reader.result
-      setRsaKeyPair({
-        ...rsaKeyPair,
-        privateKey: privateKey,
-      })
-    }
-    reader.readAsText(file)
+    const privateKey = await readFile(file)
+    setRsaKeyPair({
+      ...rsaKeyPair,
+      privateKey,
+    })
   }
 
   const decryptKeyRsa = async () => {

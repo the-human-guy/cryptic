@@ -1,3 +1,4 @@
+import { readFile } from '../utils/files.js'
 import {
   generateRSAKeyPair,
   encryptStringRsa,
@@ -36,7 +37,7 @@ export const RsaStringEncryptPage = () => {
     }
   }
 
-  const changeFilePemPublic = (files) => {
+  const changeFilePemPublic = async (files) => {
     const file = files[0]
     if (!file) {
       return
@@ -44,15 +45,11 @@ export const RsaStringEncryptPage = () => {
     if (file.size > 1024 * 1024 * 50) {
       return alert('文件太大')
     }
-    const reader = new FileReader()
-    reader.onload = async function () {
-      const publicKey = reader.result
-      setRsaKeyPair({
-        ...rsaKeyPair,
-        publicKey: publicKey,
-      })
-    }
-    reader.readAsText(file)
+    const publicKey = await readFile(file)
+    setRsaKeyPair({
+      ...rsaKeyPair,
+      publicKey,
+    })
   }
 
   const encryptKeyRsa = async () => {
