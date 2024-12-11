@@ -78,6 +78,18 @@ export function FileEncryptPage() {
             >
               Choose File
             </button>
+            <button
+              type='button'
+              data-testid='create-new-file-btn'
+              onClick={async () => {
+                const newFile = new File([''], `new-file`, {
+                  type: 'text/plain',
+                })
+                addFileToList(newFile)
+              }}
+            >
+              New File
+            </button>
             {!!selectedFile && (
               <>
                 <button
