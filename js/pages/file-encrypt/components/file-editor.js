@@ -18,6 +18,8 @@ const EDIT_MODE = {
   TEXT: 'text',
 }
 
+const FILE_AUTOEDIT_SIZE = 1024 * 1024 * 1 // 1MB
+
 export const FileEditor = ({ onSave, file: originalFile }) => {
   const [fileContent, setFileContent] = useState(null)
   const [previewMode, setPreviewMode] = useState(false)
@@ -33,6 +35,25 @@ export const FileEditor = ({ onSave, file: originalFile }) => {
 
   useEffect(() => {
     resetToOriginalFile()
+
+    if (originalFile.size <= FILE_AUTOEDIT_SIZE) {
+      if (originalFile.type?.startsWith?.('image/')) {
+        setPreviewMode(PREVIEW_MODE.IMG)
+        setEditMode(false)
+      } else if (originalFile.type == 'text/html') {
+        setEditMode(EDIT_MODE.TEXT)
+        setPreviewMode(PREVIEW_MODE.HTML)
+      } else if (
+        originalFile.type?.startsWith('text/') ||
+        originalFile.type?.startsWith('application/')
+      ) {
+        setEditMode(EDIT_MODE.TEXT)
+        setPreviewMode(false)
+      }
+    } else {
+      setEditMode(false)
+      setPreviewMode(false)
+    }
   }, [originalFile])
 
   const saveFile = () => {
@@ -76,6 +97,7 @@ ${fileContent}
 
       <select
         onChange={(e) => setEditMode(e.target.value)}
+        value={editMode}
         data-testid='file-editor-edit-mode-selector'
       >
         <option value={false}>Edit as</option>
@@ -86,6 +108,7 @@ ${fileContent}
 
       <select
         onChange={(e) => setPreviewMode(e.target.value)}
+        value={previewMode}
         data-testid='file-editor-preview-mode-selector'
       >
         <option value={false}>Preview</option>

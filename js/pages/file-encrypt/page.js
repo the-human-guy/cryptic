@@ -7,7 +7,7 @@ import {
 
 const { useState } = React
 
-const FILE_MAX_SIZE = 1024 * 1024 * 50
+const FILE_MAX_SIZE = 1024 * 1024 * 50 // 50MB
 const FILE_MAX_SIZE_LABEL = 'max. 50MB'
 
 let newFileCounter = 0
