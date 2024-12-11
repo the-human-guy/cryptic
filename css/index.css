@@ -63,7 +63,7 @@ html body {
 /* Input Smart Cover */
 .input-smart-cover {
   position: relative;
-  width: fit-content;
+  max-width: fit-content;
 }
 
 .input-smart-cover__btns {
