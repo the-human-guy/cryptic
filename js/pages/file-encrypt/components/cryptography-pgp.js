@@ -121,7 +121,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
             cols='30'
             rows='3'
             data-testid='pgp-input-privkey'
-            style={{ maxWidth: '100%' }}
+            style={{ width: '100%' }}
           />
         </InputSmartCover>
       </div>
@@ -145,7 +145,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
             cols='30'
             rows='3'
             data-testid='pgp-input-pubkey'
-            style={{ maxWidth: '100%' }}
+            style={{ width: '100%' }}
           />
         </InputSmartCover>
       </div>

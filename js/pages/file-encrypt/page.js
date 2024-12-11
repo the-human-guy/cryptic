@@ -156,7 +156,7 @@ export function FileEncryptPage() {
               )}
             </div>
 
-            <div class='col col-5' style={{ minWidth: 0 }}>
+            <div class='col col-5'>
               <Cryptography
                 file={selectedFile}
                 onFileEncrypt={addFileToList}
