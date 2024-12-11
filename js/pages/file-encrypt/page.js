@@ -44,7 +44,7 @@ export function FileEncryptPage() {
   return (
     <main style={{ paddingBottom: '7rem' }}>
       <div class='row'>
-        <div class='col col-2'>
+        <div class='col-2'>
           {/* file input */}
           <div>
             <label
@@ -156,7 +156,7 @@ export function FileEncryptPage() {
               )}
             </div>
 
-            <div class='col col-5'>
+            <div class='col-5'>
               <Cryptography
                 file={selectedFile}
                 onFileEncrypt={addFileToList}
