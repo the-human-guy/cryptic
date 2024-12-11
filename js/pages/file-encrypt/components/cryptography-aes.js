@@ -108,31 +108,29 @@ export const CryptographyAES = ({ mode = 'gcm', arrayBuffer, children }) => {
       {!!cryptoInfo && (
         <details class='card'>
           <summary>Details</summary>
-          <div style={{ overflow: 'auto', whiteSpace: 'break-spaces' }}>
-            <fieldset>
-              {Object.entries(cryptoInfo).map(([propName, propValue]) => (
-                <>
-                  <label for={'cryptoInfo_' + propName}>
-                    <b>{propName}</b>
-                  </label>
+          <div className='pt-1'>
+            {Object.entries(cryptoInfo).map(([propName, propValue]) => (
+              <>
+                <label for={'cryptoInfo_' + propName}>
+                  <b>{propName}</b>
+                </label>
 
-                  <InputSmartCover
+                <InputSmartCover
+                  value={propValue}
+                  name={propName}
+                  actionCopy
+                  actionDownload
+                  data-testid={'cryptoInfo_' + propName}
+                >
+                  <input
+                    type='text'
+                    id={'cryptoInfo_' + propName}
                     value={propValue}
-                    name={propName}
-                    actionCopy
-                    actionDownload
-                    data-testid={'cryptoInfo_' + propName}
-                  >
-                    <input
-                      type='text'
-                      id={'cryptoInfo_' + propName}
-                      value={propValue}
-                      disabled
-                    />
-                  </InputSmartCover>
-                </>
-              ))}
-            </fieldset>
+                    disabled
+                  />
+                </InputSmartCover>
+              </>
+            ))}
           </div>
         </details>
       )}
