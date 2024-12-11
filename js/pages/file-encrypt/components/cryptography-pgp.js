@@ -86,6 +86,7 @@ export const CryptographyPGP = ({ arrayBuffer, children }) => {
         style={{
           display: 'flex',
           alignItems: 'center',
+          flexDirection: 'row',
         }}
       >
         <PasswordInput
