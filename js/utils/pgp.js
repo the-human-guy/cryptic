@@ -47,10 +47,14 @@ export const decrypt = async ({
   input: encryptedData,
   verificationPublicKey,
 }) => {
-  const privateKey = await openpgp.decryptKey({
-    privateKey: await openpgp.readPrivateKey({ armoredKey: privateKeyArmored }),
-    passphrase,
-  })
+  const privateKey = passphrase
+    ? await openpgp.decryptKey({
+        privateKey: await openpgp.readPrivateKey({
+          armoredKey: privateKeyArmored,
+        }),
+        passphrase,
+      })
+    : await openpgp.readPrivateKey({ armoredKey: privateKeyArmored })
 
   const encryptedMessage = await openpgp.readMessage({
     binaryMessage: new Uint8Array(encryptedData), // parse encrypted bytes
