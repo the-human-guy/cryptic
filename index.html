@@ -15,22 +15,22 @@
     <script src="./lib/babel-standalone.min.js"></script>
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/@remix-run/router@1.19.2/dist/router.umd.min.js" crossorigin=""></script> -->
-    <script src='./lib/remix-run.router.min.js'></script>
+    <script src="./lib/remix-run.router.min.js"></script>
 
     <!-- <script src='https://unpkg.com/react-router@6.26.2/dist/umd/react-router.production.min.js' crossorigin></script> -->
-    <script src='./lib/react-router.production.min.js' ></script>
-    
-    <!-- <script src='https://unpkg.com/react-router-dom@6.26.2/dist/umd/react-router-dom.production.min.js' crossorigin></script> -->
-    <script src='./lib/react-router-dom.production.min.js'></script>
+    <script src="./lib/react-router.production.min.js"></script>
 
-    <script src='./lib/openpgp.min.js'></script>
+    <!-- <script src='https://unpkg.com/react-router-dom@6.26.2/dist/umd/react-router-dom.production.min.js' crossorigin></script> -->
+    <script src="./lib/react-router-dom.production.min.js"></script>
+
+    <script src="./lib/openpgp.min.js"></script>
 
     <!--<link rel="stylesheet" href="https://classless.de/classless.css"> -->
-    <link rel="stylesheet" href="./lib/classless.css">
-    <link rel="stylesheet" href="https://classless.de/addons/themes.css">
-    <link rel="stylesheet" href="./css/index.css">
-    
-    <title>Noticer</title>
+    <link rel="stylesheet" href="./lib/classless.css" />
+    <link rel="stylesheet" href="https://classless.de/addons/themes.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+
+    <title>Cryptic</title>
   </head>
   <body>
     <div id="root"></div>
@@ -42,21 +42,24 @@
       }
 
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js', {scope: './'})
-          .then(reg => {
+        navigator.serviceWorker
+          .register('./service-worker.js', { scope: './' })
+          .then((reg) => {
             window.serviceWorkerRegistration = reg
             // use `await window.serviceWorkerRegistration.unregister()` to unregister the service worker
             if (reg.installing) {
-              const sw = reg.installing || reg.waiting;
-              sw.onstatechange = function() {
+              const sw = reg.installing || reg.waiting
+              sw.onstatechange = function () {
                 if (sw.state === 'installed') {
-                  onward();
+                  onward()
                 }
-              };
+              }
             } else if (reg.active) {
               // something's not right or SW is bypassed.
               // previously-installed SW should have redirected this request to different page
-              console.log('<p>Service Worker is installed and not functioning as intended.<p>Please contact developer.')
+              console.log(
+                '<p>Service Worker is installed and not functioning as intended.<p>Please contact developer.',
+              )
             }
           })
           .catch(onError)
@@ -66,12 +69,17 @@
 
       // SW installed.  Refresh page so SW can respond with SW-enabled page.
       function onward() {
-        setTimeout(function() {
-          window.location.reload();
-        }, 300);
+        setTimeout(function () {
+          window.location.reload()
+        }, 300)
       }
     </script>
 
-    <script data-presets="react" type="text/babel" data-type="module" src="./js/main.js"></script>
+    <script
+      data-presets="react"
+      type="text/babel"
+      data-type="module"
+      src="./js/main.js"
+    ></script>
   </body>
 </html>
