@@ -1,18 +1,15 @@
-const { Link } = ReactRouterDOM
-
 export const Header = () => {
   return (
     <header>
       <nav>
         <ul>
-          <li>
-            <Link to='/?page=file_encrypt'>File Encrypt & Decrypt</Link>
+          <li className='text-primary'>
+            <b>🔐 Cryptic</b>
           </li>
           <li>
-            <Link to='/?page=rsa_key_encrypt'>RSA String Encrypt</Link>
-          </li>
-          <li>
-            <Link to='/?page=rsa_key_decrypt'>RSA String Decrypt</Link>
+            <a target='_blank' href='https://github.com/the-human-guy/cryptic'>
+              Github
+            </a>
           </li>
         </ul>
       </nav>
