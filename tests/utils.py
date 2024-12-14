@@ -1,13 +1,10 @@
 from base64 import b64encode, b64decode
-import hashlib
 from Cryptodome.Cipher import AES
 from Cryptodome.Random import get_random_bytes
 
 
-def encrypt(plain_text, iv, key):
+def encrypt(plain_text, key, iv):
     # generate a random salt
-    salt = get_random_bytes(AES.block_size)
-
     key_bytes = b64decode(key)  # key_base64 == exported_key + '='
     iv_bytes = b64decode(iv)
 
@@ -18,7 +15,6 @@ def encrypt(plain_text, iv, key):
     cipher_text, tag = cipher_config.encrypt_and_digest(bytes(plain_text, 'utf-8'))
     return {
         'cipher_text': b64encode(cipher_text).decode('utf-8'),
-        'salt': b64encode(salt).decode('utf-8'),
         'nonce': b64encode(cipher_config.nonce).decode('utf-8'),
         'tag': b64encode(tag).decode('utf-8')
     }
@@ -34,10 +30,6 @@ def decrypt(enc_dict, password):
     nonce = b64decode(enc_dict['nonce'])
     tag = b64decode(enc_dict['tag'])
 
-    # generate the private key from the password and salt
-    private_key = hashlib.scrypt(
-        password.encode(), salt=salt, n=2 ** 14, r=8, p=1, dklen=32)
-
     # create the cipher config
     cipher = AES.new(private_key, AES.MODE_GCM, nonce=nonce)
 
@@ -47,8 +39,11 @@ def decrypt(enc_dict, password):
     return decrypted
 
 
-test = encrypt('12345', 'EibPlXD3K3HE1juJ', 'zUC_lCsRijm2DNqTRCrBPOm-Z2Q8s90EHa0-wCK45JE=')
-print(test)
+test = encrypt(
+    plain_text='12345',
+    key='6gaNF84jk4UZXv2sE6nmPIaK9ANPR0Ygsz7GkSTLBEI',
+    iv='6gaNF84jk4UZXv2s=',
+  )
 
-# 30PxWSIHCLfunjYm53oWYIEkC-zNGnmk8lGsRE94MgI==
+print(test)
 
