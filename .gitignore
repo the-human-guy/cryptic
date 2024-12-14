@@ -4,3 +4,6 @@ node_modules/
 Session.vim
 package-lock.json
 package.json
+.venv
+.DB_Store
+.idea

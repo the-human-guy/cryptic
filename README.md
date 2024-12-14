@@ -25,3 +25,12 @@ Clone this repo, then:
 - AES-CTR
 - PGP: allow users to choose type (ecc) and openpgp.enums.curve
 - More editor & preview modes
+
+
+## How to run tests locally
+`
+python3 -m venv venv
+source .venv/bin/activate
+pip install -r requirements.txt
+playwright install
+`
