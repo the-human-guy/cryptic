@@ -7,3 +7,4 @@ package.json
 .venv
 .DB_Store
 .idea
+__pycache__
