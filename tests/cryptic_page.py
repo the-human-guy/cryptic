@@ -45,18 +45,18 @@ class CrypticPage(Page):
         self.page.click(Locators.SUMMARY_BTN.value)
 
     def get_aes_key(self):
-        return self.page.locator("#cryptoInfo_aesKeyExtracted_base64").get_attribute(
+        return self.page.locator(Locators.AES_KEY_EXTRACTED_FIELD.value).get_attribute(
             "value"
         )
 
     def get_auth_tag(self):
-        return self.page.locator("#cryptoInfo_authTag_base64").get_attribute("value")
+        return self.page.locator(Locators.AUTH_TAG_FIELD.value).get_attribute("value")
 
     def get_iv(self):
-        return self.page.locator("#cryptoInfo_iv_base64").get_attribute("value")
+        return self.page.locator(Locators.IV_FIELD.value).get_attribute("value")
 
     def get_cyphered_text(self):
-        return self.page.locator("#cryptoInfo_cipherText_base64").get_attribute("value")
+        return self.page.locator(Locators.CYPHERED_TEXT_FIELD.value).get_attribute("value")
 
     def get_encryption_details(self):
         encryption_info = EncryptionInfo(

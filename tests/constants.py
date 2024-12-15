@@ -12,6 +12,10 @@ class Locators(Enum):
     ENCRYPT_BTN = "crypto-btn-encrypt"
     TEXT_TO_ENCRYPT_TEXTAREA = "//textarea[@data-testid='file-editor-mode-text-input']"
     SUMMARY_BTN = "//summary[text()='Details']"
+    AUTH_TAG_FIELD = "#cryptoInfo_authTag_base64"
+    AES_KEY_EXTRACTED_FIELD = "#cryptoInfo_aesKeyExtracted_base64"
+    IV_FIELD = "#cryptoInfo_iv_base64"
+    CYPHERED_TEXT_FIELD = "#cryptoInfo_cipherText_base64"
 
 
 @dataclass
