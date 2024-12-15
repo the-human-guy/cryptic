@@ -56,7 +56,9 @@ class CrypticPage(Page):
         return self.page.locator(Locators.IV_FIELD.value).get_attribute("value")
 
     def get_cyphered_text(self):
-        return self.page.locator(Locators.CYPHERED_TEXT_FIELD.value).get_attribute("value")
+        return self.page.locator(Locators.CYPHERED_TEXT_FIELD.value).get_attribute(
+            "value"
+        )
 
     def get_encryption_details(self):
         encryption_info = EncryptionInfo(
