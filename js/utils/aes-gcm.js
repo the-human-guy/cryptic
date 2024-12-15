@@ -74,8 +74,8 @@ export async function encrypt({
     const authTag = cipherText.slice(cipherText.byteLength - 16)
     let aesKeyExtracted = 'non-extractable key'
     if (extractableKey) {
-      aesKeyExtracted = await window.crypto.subtle.exportKey('jwk', aesKey)
-      aesKeyExtracted = aesKeyExtracted.k
+      aesKeyExtracted = await window.crypto.subtle.exportKey('raw', aesKey)
+      aesKeyExtracted = buff_to_base64(aesKeyExtracted)
     }
 
     return {
