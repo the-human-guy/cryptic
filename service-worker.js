@@ -23,7 +23,7 @@ async function handleRequest(request) {
       curVersion = parsedVersion
     }
     let jsx = await r.text()
-    jsx = jsx.replaceAll(/(?<!import)(.js')/g, `.js?cryptic-version=${curVersion}'`)
+    jsx = jsx.replaceAll(/(?<=import.*)(.js')/g, `.js?cryptic-version=${curVersion}'`)
     const js = Babel.transform(jsx, {presets: ['react']}).code
     return new Response(js, r)
   } else {
