@@ -17,7 +17,7 @@ async function handleRequest(request) {
   }
   const url = new URL(request.url)
   const r = await fetch(request)
-  if (r.status === 200 && url.host === location.host && (url.pathname.endsWith('.jsx') || url.pathname.endsWith('.js')) && !url.pathname.startsWith('./lib') && !url.pathname.startsWith('/lib')) {
+  if (r.status === 200 && url.host === location.host && (url.pathname.endsWith('.jsx') || url.pathname.endsWith('.js')) && !url.pathname.startsWith('./lib') && !url.pathname.startsWith('/lib') && !url.pathname.includes('/lib')) {
     const parsedVersion = request.url.split('?cryptic-version=')[1] || undefined
     if (!!parsedVersion && parsedVersion !== curVersion) {
       curVersion = parsedVersion
