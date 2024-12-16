@@ -8,16 +8,17 @@ class CrypticPage(Page):
         super().__init__(page)
         self.page = page
 
-    def click_button(self, data_test_id: str):
-        self.page.click(f"//*[@data-testid='{data_test_id}']")
+    def click_element(self, data_test_id: str, element: str = "*"):
+        self.page.click(f"//{element}[@data-testid='{data_test_id}']")
         return self
 
-    def fill_form(self, locator: str, text: str):
+    def fill_form(self, data_test_id: str, text: str, element: str = "*"):
+        locator = f"//{element}[@data-testid='{data_test_id}']"
         self.page.fill(selector=locator, value=text)
         return self
 
     def click_create_new_button(self):
-        self.click_button(DataTestId.CREATE_NEW_FILE_BTN.value)
+        self.click_element(DataTestId.CREATE_NEW_FILE_BTN.value)
         return self
 
     def select_crypto_algorithm(self, algorithm: str):
@@ -31,24 +32,26 @@ class CrypticPage(Page):
         return self
 
     def enter_password(self, text: str):
-        self.fill_form(DataTestId.PASSWORD_FIELD.value, text=text)
+        self.fill_form(DataTestId.PASSWORD_FIELD.value, text=text, element="input")
         return self
 
     def click_encrypt_button(self):
-        self.click_button(DataTestId.ENCRYPT_BTN.value)
+        self.click_element(DataTestId.ENCRYPT_BTN.value)
         return self
 
     def enter_text_to_encrypt(self, text: str):
-        self.fill_form(DataTestId.TEXT_TO_ENCRYPT_TEXTAREA.value, text=text)
+        self.fill_form(
+            DataTestId.TEXT_TO_ENCRYPT_TEXTAREA.value, text=text, element="textarea"
+        )
 
     def click_details(self):
         self.page.click(DataTestId.SUMMARY_BTN.value)
 
     def click_save_file_button(self):
-        self.click_button(DataTestId.SAVE_FILE_BTN.value)
+        self.click_element(DataTestId.SAVE_FILE_BTN.value)
 
     def click_reset_button(self):
-        self.click_button(DataTestId.RESET_BTN.value)
+        self.click_element(DataTestId.RESET_BTN.value)
 
     def get_aes_key(self):
         return self.page.locator(

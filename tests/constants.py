@@ -8,9 +8,9 @@ class DataTestId(Enum):
     AES_KEY_EXTRACTABILITY_DROPDOWN = (
         "//select[@data-testid='aes-key-extractability-selector']"
     )
-    PASSWORD_FIELD = "//input[@data-testid='aes-passphrase-input']"
+    PASSWORD_FIELD = "aes-passphrase-input"
     ENCRYPT_BTN = "crypto-btn-encrypt"
-    TEXT_TO_ENCRYPT_TEXTAREA = "//textarea[@data-testid='file-editor-mode-text-input']"
+    TEXT_TO_ENCRYPT_TEXTAREA = "file-editor-mode-text-input"
     SUMMARY_BTN = "//summary[text()='Details']"
     AUTH_TAG_FIELD = "#cryptoInfo_authTag_base64"
     AES_KEY_EXTRACTED_FIELD = "#cryptoInfo_aesKeyExtracted_base64"
