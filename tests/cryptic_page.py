@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 
-from tests.constants import EncryptionInfo, DataTestId
+from tests.constants import DataTestId, EncryptionInfo
 
 
 class CrypticPage(Page):
@@ -51,9 +51,9 @@ class CrypticPage(Page):
         self.click_button(DataTestId.RESET_BTN.value)
 
     def get_aes_key(self):
-        return self.page.locator(DataTestId.AES_KEY_EXTRACTED_FIELD.value).get_attribute(
-            "value"
-        )
+        return self.page.locator(
+            DataTestId.AES_KEY_EXTRACTED_FIELD.value
+        ).get_attribute("value")
 
     def get_auth_tag(self):
         return self.page.locator(DataTestId.AUTH_TAG_FIELD.value).get_attribute("value")
