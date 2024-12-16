@@ -44,6 +44,12 @@ class CrypticPage(Page):
     def click_details(self):
         self.page.click(Locators.SUMMARY_BTN.value)
 
+    def click_save_file_button(self):
+        self.click_button(Locators.SAVE_FILE_BTN.value)
+
+    def click_reset_button(self):
+        self.click_button(Locators.RESET_BTN.value)
+
     def get_aes_key(self):
         return self.page.locator(Locators.AES_KEY_EXTRACTED_FIELD.value).get_attribute(
             "value"

@@ -15,7 +15,9 @@ class Locators(Enum):
     AUTH_TAG_FIELD = "#cryptoInfo_authTag_base64"
     AES_KEY_EXTRACTED_FIELD = "#cryptoInfo_aesKeyExtracted_base64"
     IV_FIELD = "#cryptoInfo_iv_base64"
-    CYPHERED_TEXT_FIELD = "#cryptoInfo_cipherText_base64"
+    CYPHERED_TEXT_FIELD = "#cryptoInfo_cipherTextWithoutAuthTag_base64"
+    SAVE_FILE_BTN = "file-editor-btn-save"
+    RESET_BTN = "reset-form-btn"
 
 
 @dataclass
