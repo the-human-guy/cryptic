@@ -25,3 +25,6 @@ Clone this repo, then:
 - AES-CTR
 - PGP: allow users to choose type (ecc) and openpgp.enums.curve
 - More editor & preview modes
+
+## Pre-commit version bump
+`cp ./pre-commit ./.git/hooks/pre-commit && chmod +x ./.git/hooks/pre-commit`
