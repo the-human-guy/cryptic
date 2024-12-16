@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 
-from tests.constants import DataTestId, EncryptionInfo
+from tests.constants import DataTestId, EncryptionInfo, ElementId
 
 
 class CrypticPage(Page):
@@ -17,18 +17,21 @@ class CrypticPage(Page):
         self.page.fill(selector=locator, value=text)
         return self
 
+    def select_dropdown_option(self, data_test_id: str, value: str, element: str = "*"):
+        locator = f"//{element}[@data-testid='{data_test_id}']"
+        return self.page.select_option(locator, value=value)
+
+
     def click_create_new_button(self):
         self.click_element(DataTestId.CREATE_NEW_FILE_BTN.value)
         return self
 
     def select_crypto_algorithm(self, algorithm: str):
-        self.page.select_option(DataTestId.CRYPTO_ALGO_DROPDOWN.value, value=algorithm)
+        self.select_dropdown_option(DataTestId.CRYPTO_ALGO_DROPDOWN.value, value=algorithm, element='select')
         return self
 
     def select_aes_key_extractability(self, is_extractable: str):
-        self.page.select_option(
-            DataTestId.AES_KEY_EXTRACTABILITY_DROPDOWN.value, value=is_extractable
-        )
+        self.select_dropdown_option(DataTestId.AES_KEY_EXTRACTABILITY_DROPDOWN.value, value=is_extractable, element='select')
         return self
 
     def enter_password(self, text: str):
@@ -55,17 +58,17 @@ class CrypticPage(Page):
 
     def get_aes_key(self):
         return self.page.locator(
-            DataTestId.AES_KEY_EXTRACTED_FIELD.value
+            ElementId.AES_KEY_EXTRACTED_FIELD.value
         ).get_attribute("value")
 
     def get_auth_tag(self):
-        return self.page.locator(DataTestId.AUTH_TAG_FIELD.value).get_attribute("value")
+        return self.page.locator(ElementId.AUTH_TAG_FIELD.value).get_attribute("value")
 
     def get_iv(self):
-        return self.page.locator(DataTestId.IV_FIELD.value).get_attribute("value")
+        return self.page.locator(ElementId.IV_FIELD.value).get_attribute("value")
 
     def get_cyphered_text(self):
-        return self.page.locator(DataTestId.CYPHERED_TEXT_FIELD.value).get_attribute(
+        return self.page.locator(ElementId.CYPHERED_TEXT_FIELD.value).get_attribute(
             "value"
         )
 
