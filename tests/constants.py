@@ -14,6 +14,12 @@ class DataTestId(Enum):
     RESET_BTN = "reset-form-btn"
 
 
+class EncryptionAlgo(Enum):
+    GCM = "GCM"
+    CBC = "CBC"
+    PGP = "PGP"
+
+
 class ElementId(Enum):
     AUTH_TAG_FIELD = "#cryptoInfo_authTag_base64"
     AES_KEY_EXTRACTED_FIELD = "#cryptoInfo_aesKeyExtracted_base64"
