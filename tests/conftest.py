@@ -1,16 +1,22 @@
-import pytest
+import os
 
-from playwright.sync_api import sync_playwright, expect
+import pytest
+from dotenv import load_dotenv
+from playwright.sync_api import expect, sync_playwright
 
 from tests.cryptic_page import CrypticPage
 
+load_dotenv()
 
-@pytest.fixture(scope='session')
+CRYPTIC_URL = os.getenv("CRYPTIC_URL", "localhost:8000")
+
+
+@pytest.fixture(scope="session")
 def cryptic_page():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto('https://the-human-guy.github.io/cryptic/')
+        page.goto(CRYPTIC_URL)
         cryptic = CrypticPage(page)
-        expect(cryptic.get_by_text('Github')).to_be_visible()
+        expect(cryptic.get_by_text("Github")).to_be_visible()
         yield cryptic
