@@ -37,3 +37,11 @@ pip install -r requirements.txt
 playwright install chromium
 pytest tests/
 `
+Fish shell:
+`
+python3 -m venv .venv
+source .venv/bin/activate.fish
+pip install -r requirements.txt
+playwright install chromium
+pytest tests/
+`
