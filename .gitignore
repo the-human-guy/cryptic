@@ -4,3 +4,8 @@ node_modules/
 Session.vim
 package-lock.json
 package.json
+.venv
+.DS_Store
+.idea
+__pycache__
+.env
