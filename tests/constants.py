@@ -24,12 +24,13 @@ class ElementId(Enum):
     AUTH_TAG_FIELD = "#cryptoInfo_authTag_base64"
     AES_KEY_EXTRACTED_FIELD = "#cryptoInfo_aesKeyExtracted_base64"
     IV_FIELD = "#cryptoInfo_iv_base64"
-    CYPHERED_TEXT_FIELD = "#cryptoInfo_cipherTextWithoutAuthTag_base64"
+    CYPHERED_TEXT_FIELD_GSM = "#cryptoInfo_cipherTextWithoutAuthTag_base64"
+    CYPHERED_TEXT_FIELD_CBC = "#cryptoInfo_cipherText_base64"
 
 
 @dataclass
 class EncryptionInfo:
     iv: str
     aes_key: str
-    auth_tag: str
-    encrypted_text: str
+    encrypted_text: str = None
+    auth_tag: str = None

@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 
-from tests.constants import DataTestId, ElementId, EncryptionInfo
+from tests.constants import DataTestId, ElementId, EncryptionAlgo, EncryptionInfo
 
 
 class CrypticPage(Page):
@@ -72,16 +72,21 @@ class CrypticPage(Page):
     def get_iv(self):
         return self.page.locator(ElementId.IV_FIELD.value).get_attribute("value")
 
-    def get_cyphered_text(self):
-        return self.page.locator(ElementId.CYPHERED_TEXT_FIELD.value).get_attribute(
-            "value"
+    def get_cyphered_text(self, algo: str):
+        element_id = (
+            ElementId.CYPHERED_TEXT_FIELD_GSM.value
+            if algo == EncryptionAlgo.GCM.value
+            else ElementId.CYPHERED_TEXT_FIELD_CBC.value
         )
+        return self.page.locator(element_id).get_attribute("value")
 
-    def get_encryption_details(self):
+    def get_encryption_details(self, algo: str):
         encryption_info = EncryptionInfo(
             aes_key=self.get_aes_key(),
-            auth_tag=self.get_auth_tag(),
             iv=self.get_iv(),
-            encrypted_text=self.get_cyphered_text(),
+            encrypted_text=self.get_cyphered_text(algo=algo),
+        )
+        encryption_info.auth_tag = (
+            self.get_auth_tag() if algo == EncryptionAlgo.GCM.value else None
         )
         return encryption_info
