@@ -1,7 +1,12 @@
 // transpile JSX using babel so it can be run in the browser, you don't need to edit this
 // if you do edit this file, call `await window.serviceWorkerRegistration.unregister()` in the browser to update it
 
-self.addEventListener('install', e => e.waitUntil(getBabel()))
+let curVersion = 0
+
+self.addEventListener('install', e => {
+  self.skipWaiting()
+  e.waitUntil(getBabel())
+})
 self.addEventListener('fetch', e => e.respondWith(handleRequest(e.request)))
 
 async function getBabel() {
@@ -15,8 +20,13 @@ async function handleRequest(request) {
   }
   const url = new URL(request.url)
   const r = await fetch(request)
-  if (r.status === 200 & url.host === location.host && (url.pathname.endsWith('.js') || url.pathname.endsWith('.js')) && !url.pathname.startsWith('./lib')) {
-    const jsx = await r.text()
+  if (r.status === 200 && url.host === location.host && (url.pathname.endsWith('.jsx') || url.pathname.endsWith('.js')) && !url.pathname.startsWith('./lib') && !url.pathname.startsWith('/lib') && !url.pathname.includes('/lib')) {
+    const parsedVersion = request.url.split('?cryptic-version=')[1] || undefined
+    if (!!parsedVersion && parsedVersion !== curVersion) {
+      curVersion = parsedVersion
+    }
+    let jsx = await r.text()
+    jsx = jsx.replaceAll(/(?<=import.*)(.js')/g, `.js?cryptic-version=${curVersion}'`)
     const js = Babel.transform(jsx, {presets: ['react']}).code
     return new Response(js, r)
   } else {

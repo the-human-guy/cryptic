@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+
+newV=$(date +%s)
+sed -Ei "s/\?cryptic-version=([0-9a-z]*)/\\?cryptic\-version\=$newV/g" ./index.html
+
+git add ./index.html
+
+

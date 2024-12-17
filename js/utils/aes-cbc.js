@@ -68,8 +68,8 @@ export async function encrypt({
 
     let aesKeyExtracted = 'non-extractable key'
     if (extractableKey) {
-      aesKeyExtracted = await window.crypto.subtle.exportKey('jwk', aesKey)
-      aesKeyExtracted = aesKeyExtracted.k
+      aesKeyExtracted = await window.crypto.subtle.exportKey('raw', aesKey)
+      aesKeyExtracted = buff_to_base64(aesKeyExtracted)
     }
 
     return {

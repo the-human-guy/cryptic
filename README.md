@@ -28,12 +28,3 @@ Clone this repo, then:
 
 ## Pre-commit version bump
 `cp ./pre-commit ./.git/hooks/pre-commit && chmod +x ./.git/hooks/pre-commit`
-
-## How to run tests locally
-`
-python3 -m venv venv
-source .venv/bin/activate
-pip install -r requirements.txt
-playwright install chromium
-pytest tests/
-`
