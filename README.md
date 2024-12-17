@@ -1,6 +1,6 @@
 # <sub><sub>✨</sub></sub>🔐<sup>✨</sup> [Cryptic](https://the-human-guy.github.io/cryptic)
 
-**Encrypt, Decrypt, and Edit Files in-browser**
+**Encrypt, Decrypt, and Edit Files in your browser**
 
 ## How it works
 
