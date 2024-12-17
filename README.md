@@ -26,6 +26,8 @@ Clone this repo, then:
 - PGP: allow users to choose type (ecc) and openpgp.enums.curve
 - More editor & preview modes
 
+## Pre-commit version bump
+`cp ./pre-commit ./.git/hooks/pre-commit && chmod +x ./.git/hooks/pre-commit`
 
 ## How to run tests locally
 `
@@ -33,4 +35,5 @@ python3 -m venv venv
 source .venv/bin/activate
 pip install -r requirements.txt
 playwright install chromium
+pytest tests/
 `
