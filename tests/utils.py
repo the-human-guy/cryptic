@@ -1,5 +1,6 @@
 from base64 import b64decode, b64encode
 from dataclasses import dataclass
+from pathlib import Path
 
 from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad
@@ -30,3 +31,13 @@ def encrypt(plain_text: str, key: str, iv: str, algo: str):
 
 def decrypt(enc_dict, password):
     pass
+
+
+def find_project_root(start_path=None):
+    start_path = start_path or Path(__file__).resolve()
+    current_path = start_path
+    while current_path != current_path.root:
+        if (current_path / ".gitignore").exists():
+            return current_path
+        current_path = current_path.parent
+    raise FileNotFoundError("Project root not found")
