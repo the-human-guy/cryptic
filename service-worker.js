@@ -3,7 +3,10 @@
 
 let curVersion = 0
 
-self.addEventListener('install', e => e.waitUntil(getBabel()))
+self.addEventListener('install', e => {
+  self.skipWaiting()
+  e.waitUntil(getBabel())
+})
 self.addEventListener('fetch', e => e.respondWith(handleRequest(e.request)))
 
 async function getBabel() {
