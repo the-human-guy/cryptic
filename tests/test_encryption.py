@@ -21,7 +21,7 @@ def test_can_encrypt_file_with_aes_gcm(cryptic_page, text, password, encryption_
     cryptic_page.click_save_file_button()
     cryptic_page.select_crypto_algorithm(encryption_algo)
     cryptic_page.enter_password(password)
-    cryptic_page.select_aes_key_extractability("true")
+    cryptic_page.select_aes_key_extractability()
     cryptic_page.click_encrypt_button()
     cryptic_page.click_details()
     actual_data = cryptic_page.get_encryption_details()

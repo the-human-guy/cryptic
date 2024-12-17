@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 
-from tests.constants import DataTestId, EncryptionInfo, ElementId
+from tests.constants import DataTestId, ElementId, EncryptionInfo
 
 
 class CrypticPage(Page):
@@ -21,17 +21,22 @@ class CrypticPage(Page):
         locator = f"//{element}[@data-testid='{data_test_id}']"
         return self.page.select_option(locator, value=value)
 
-
     def click_create_new_button(self):
         self.click_element(DataTestId.CREATE_NEW_FILE_BTN.value)
         return self
 
     def select_crypto_algorithm(self, algorithm: str):
-        self.select_dropdown_option(DataTestId.CRYPTO_ALGO_DROPDOWN.value, value=algorithm, element='select')
+        self.select_dropdown_option(
+            DataTestId.CRYPTO_ALGO_DROPDOWN.value, value=algorithm, element="select"
+        )
         return self
 
-    def select_aes_key_extractability(self, is_extractable: str):
-        self.select_dropdown_option(DataTestId.AES_KEY_EXTRACTABILITY_DROPDOWN.value, value=is_extractable, element='select')
+    def select_aes_key_extractability(self, is_extractable: str = "true"):
+        self.select_dropdown_option(
+            DataTestId.AES_KEY_EXTRACTABILITY_DROPDOWN.value,
+            value=is_extractable,
+            element="select",
+        )
         return self
 
     def enter_password(self, text: str):
@@ -57,9 +62,9 @@ class CrypticPage(Page):
         self.click_element(DataTestId.RESET_BTN.value)
 
     def get_aes_key(self):
-        return self.page.locator(
-            ElementId.AES_KEY_EXTRACTED_FIELD.value
-        ).get_attribute("value")
+        return self.page.locator(ElementId.AES_KEY_EXTRACTED_FIELD.value).get_attribute(
+            "value"
+        )
 
     def get_auth_tag(self):
         return self.page.locator(ElementId.AUTH_TAG_FIELD.value).get_attribute("value")
