@@ -5,6 +5,6 @@ Session.vim
 package-lock.json
 package.json
 .venv
-.DB_Store
+.DS_Store
 .idea
 __pycache__
