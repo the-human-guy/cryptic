@@ -64,3 +64,23 @@ def test_can_encrypt_file_with_aes_cbc(cryptic_page, text, password, encryption_
     )
     assert actual_data.encrypted_text == expected_data.encrypted_text
     cryptic_page.click_reset_button()
+
+
+@pytest.mark.parametrize(
+    "text, passphrase, encryption_algo",
+    [
+        ("Hello world", "1a2b3c4d5e6f7g8h", EncryptionAlgo.PGP.value),
+        ("My precious", "Wa1t4!t_ dUmbA$$", EncryptionAlgo.PGP.value),
+    ],
+    ids=[
+        "Weak pass without special symbols PGP algo",
+        "Strong pass with special symbols PGP algo",
+    ],
+)
+def test_can_encrypt_file_with_pgp(cryptic_page, text, passphrase, encryption_algo):
+    cryptic_page.click_create_new_button()
+    cryptic_page.enter_text_to_encrypt(text)
+    cryptic_page.click_save_file_button()
+    cryptic_page.select_crypto_algorithm(encryption_algo)
+    cryptic_page.enter_passphrase(passphrase)
+    cryptic_page.generate_pgp_keys()

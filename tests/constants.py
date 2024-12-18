@@ -12,6 +12,9 @@ class DataTestId(Enum):
     SUMMARY_BTN = "//summary[text()='Details']"
     SAVE_FILE_BTN = "file-editor-btn-save"
     RESET_BTN = "reset-form-btn"
+    PASSPHRASE_FIELD = "pgp-input-passphrase"
+    GENERATE_PGP_KEYS_BTN = "pgp-gen-keys-btn"
+    PGP_REVOC_CERT_INPUT = "pgp-revoc-cert-input"
 
 
 class EncryptionAlgo(Enum):
@@ -26,6 +29,9 @@ class ElementId(Enum):
     IV_FIELD = "#cryptoInfo_iv_base64"
     CYPHERED_TEXT_FIELD_GSM = "#cryptoInfo_cipherTextWithoutAuthTag_base64"
     CYPHERED_TEXT_FIELD_CBC = "#cryptoInfo_cipherText_base64"
+    PRIVATE_KEY_TEXTAREA = "#privateKey"
+    PUBLIC_KEY_TEXTAREA = "#publicKey"
+
 
 
 @dataclass

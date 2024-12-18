@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from tests.constants import DataTestId, ElementId, EncryptionAlgo, EncryptionInfo
 
@@ -30,6 +30,14 @@ class CrypticPage(Page):
             DataTestId.CRYPTO_ALGO_DROPDOWN.value, value=algorithm, element="select"
         )
         return self
+
+    def enter_passphrase(self, passphrase):
+        self.fill_form(DataTestId.PASSPHRASE_FIELD.value, passphrase, 'input')
+
+    def generate_pgp_keys(self):
+        self.click_element(DataTestId.GENERATE_PGP_KEYS_BTN.value, 'button')
+        assert self.page.locator(f'data-testid={DataTestId.PGP_REVOC_CERT_INPUT.value}').get_attribute(
+            'value') is not None
 
     def select_aes_key_extractability(self, is_extractable: str = "true"):
         self.select_dropdown_option(
