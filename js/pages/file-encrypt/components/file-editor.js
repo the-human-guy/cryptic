@@ -34,26 +34,28 @@ export const FileEditor = ({ onSave, file: originalFile }) => {
   }
 
   useEffect(() => {
-    resetToOriginalFile()
+    (async () => {
+      await resetToOriginalFile()
 
-    if (originalFile.size <= FILE_AUTOEDIT_SIZE) {
-      if (originalFile.type?.startsWith?.('image/')) {
-        setPreviewMode(PREVIEW_MODE.IMG)
+      if (originalFile.size <= FILE_AUTOEDIT_SIZE) {
+        if (originalFile.type?.startsWith?.('image/')) {
+          setPreviewMode(PREVIEW_MODE.IMG)
+          setEditMode(false)
+        } else if (originalFile.type == 'text/html') {
+          setEditMode(EDIT_MODE.TEXT)
+          setPreviewMode(PREVIEW_MODE.HTML)
+        } else if (
+          originalFile.type?.startsWith('text/') ||
+          originalFile.type?.startsWith('application/')
+        ) {
+          setPreviewMode(false)
+          setEditMode(EDIT_MODE.TEXT)
+        }
+      } else {
         setEditMode(false)
-      } else if (originalFile.type == 'text/html') {
-        setEditMode(EDIT_MODE.TEXT)
-        setPreviewMode(PREVIEW_MODE.HTML)
-      } else if (
-        originalFile.type?.startsWith('text/') ||
-        originalFile.type?.startsWith('application/')
-      ) {
-        setEditMode(EDIT_MODE.TEXT)
         setPreviewMode(false)
       }
-    } else {
-      setEditMode(false)
-      setPreviewMode(false)
-    }
+    })()
   }, [originalFile])
 
   const saveFile = () => {

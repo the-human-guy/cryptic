@@ -2,6 +2,7 @@
 
 newV=$(date +%s)
 sed -Ei "s/\?cryptic-version=([0-9a-z]*)/\\?cryptic\-version\=$newV/g" ./index.html
+echo "New version is $newV"
 
 git add ./index.html
 
